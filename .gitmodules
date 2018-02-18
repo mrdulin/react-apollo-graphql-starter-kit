@@ -1,0 +1,6 @@
+[submodule "react-apollo-graphql-server"]
+	path = react-apollo-graphql-server
+	url = https://github.com/mrdulin/react-apollo-graphql-server.git
+[submodule "react-apollo-graphql-client"]
+	path = react-apollo-graphql-client
+	url = https://github.com/mrdulin/react-apollo-graphql-client.git
