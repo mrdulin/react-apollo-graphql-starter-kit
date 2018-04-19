@@ -3,8 +3,10 @@ const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const src = path.resolve(__dirname, 'src');
-const dist = path.resolve(__dirname, 'dist');
+const cwd = process.cwd();
+
+const src = path.resolve(cwd, 'client/src');
+const dist = path.resolve(cwd, 'client/dist');
 const port = 3000;
 
 module.exports = {
@@ -15,6 +17,7 @@ module.exports = {
   output: {
     path: dist,
     filename: '[name].js',
+    publicPath: '/',
     pathinfo: true
   },
   module: {
