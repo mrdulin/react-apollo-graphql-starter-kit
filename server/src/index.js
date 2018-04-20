@@ -6,46 +6,11 @@ const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
 const { makeExecutableSchema } = require('graphql-tools');
 
 const config = require('../../webpack.config');
+const { typeDefs } = require('./typeDefs');
+const { resolvers } = require('./resolvers');
 
 const app = express();
 const compiler = webpack(config);
-
-const books = [
-  {
-    id: '1',
-    title: "Harry Potter and the Sorcerer's stone",
-    author: 'J.K. Rowling'
-  },
-  {
-    id: '2',
-    title: 'Jurassic Park',
-    author: 'Michael Crichton'
-  }
-];
-
-const typeDefs = `
-  type Query {
-    books: [Book]
-  }
-
-  type Book {
-    id: ID!,
-    title: String,
-    author: String
-  }
-`;
-
-const resolvers = {
-  Query: {
-    books: () => {
-      return new Promise(resolve => {
-        setTimeout(() => {
-          resolve(books);
-        }, 2000);
-      });
-    }
-  }
-};
 
 const schema = makeExecutableSchema({
   typeDefs,

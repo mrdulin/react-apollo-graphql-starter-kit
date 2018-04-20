@@ -10,9 +10,7 @@ import Home from './containers/home';
 import About from './containers/about';
 import BookList from './containers/bookList';
 
-const client = new ApolloClient({
-  // uri: 'http://localhost:4000/graphql'
-});
+const client = new ApolloClient();
 
 function test() {
   client
@@ -28,7 +26,7 @@ function test() {
     .then(result => console.log(result))
     .catch(err => console.error(err));
 }
-// test();
+test();
 
 const render = Root => {
   ReactDOM.render(
