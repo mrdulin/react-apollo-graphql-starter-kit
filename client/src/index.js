@@ -5,6 +5,7 @@ import { ApolloClient } from 'apollo-client';
 import { HttpLink, from, ApolloLink, InMemoryCache } from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 import { setContext } from 'apollo-link-context';
+import { toIdValue } from 'apollo-utilities';
 
 import App from './containers/app';
 import Home from './containers/home';
@@ -31,8 +32,18 @@ const latencyMiddleware = setContext(() => {
     }, 500);
   });
 });
+const cache = new InMemoryCache({
+  cacheRedirects: {
+    Query: {
+      book: (_, args) => {
+        console.log('cacheRedirects args: ', args);
+        return toIdValue(cache.config.dataIdFromObject({ __typename: 'Book', id: args.id }));
+      }
+    }
+  }
+});
 const client = new ApolloClient({
-  cache: new InMemoryCache(),
+  cache,
   link: from([authMiddleware, latencyMiddleware, httpLink])
 });
 

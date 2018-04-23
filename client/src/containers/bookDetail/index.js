@@ -4,6 +4,7 @@ import PT from 'prop-types';
 
 import { bookDetailQuery } from './queries';
 import AddMessage from './AddMessage';
+import BookPreview from './BookPreview';
 
 class BookDetail extends React.Component {
   render() {
@@ -11,16 +12,17 @@ class BookDetail extends React.Component {
       data: { loading, error, book },
       match
     } = this.props;
-    if (loading) return <p>loading...</p>;
+    if (loading) return <BookPreview bookId={match.id} />;
     if (error) return <p>{error.message}</p>;
     if (book == null) {
       return <p>Not Found</p>;
     }
+    const messages = book.messages || [];
     return (
       <div>
         <h3>{book.title}</h3>
         <ul>
-          {book.messages.map(msg => {
+          {messages.map(msg => {
             return <li key={msg.id}>{msg.text}</li>;
           })}
         </ul>

@@ -6,8 +6,13 @@ const resolvers = {
       return fakeDB.books;
     },
     book: (root, { id }) => {
-      const bookFound = fakeDB.books.find(book => book.id === id);
-      return bookFound;
+      return new Promise(resolve => {
+        setTimeout(() => {
+          const bookFound = fakeDB.books.find(book => book.id === id);
+          resolve(bookFound);
+        }, 2000);
+      });
+      // return bookFound;
     }
   },
   Mutation: {
