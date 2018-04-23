@@ -1,32 +1,55 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter, Route, Switch } from 'react-router-dom';
-import ApolloClient from 'apollo-boost';
+import { ApolloClient } from 'apollo-client';
+import { HttpLink, from, ApolloLink, InMemoryCache } from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
-import gql from 'graphql-tag';
+import { setContext } from 'apollo-link-context';
 
 import App from './containers/app';
 import Home from './containers/home';
 import About from './containers/about';
 import BookList from './containers/bookList';
 
-const client = new ApolloClient();
+import './index.css';
 
-function test() {
-  client
-    .query({
-      query: gql`
-        {
-          books {
-            title
-          }
-        }
-      `
-    })
-    .then(result => console.log(result))
-    .catch(err => console.error(err));
-}
-test();
+const httpLink = new HttpLink({ uri: '/graphql' });
+const authMiddleware = new ApolloLink((operation, forward) => {
+  operation.setContext({
+    headers: {
+      authorization: localStorage.getItem('token') || 'default token'
+    }
+  });
+
+  return forward(operation);
+});
+const latencyMiddleware = setContext(() => {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve('delay');
+    }, 500);
+  });
+});
+const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  link: from([authMiddleware, latencyMiddleware, httpLink])
+});
+
+// function test() {
+//   client
+//     .query({
+//       query: gql`
+//         {
+//           books {
+//             title
+//           }
+//         }
+//       `
+//     })
+//     .then(result => console.log(result))
+//     .catch(err => console.error(err));
+// }
+// test();
 
 const render = Root => {
   ReactDOM.render(
