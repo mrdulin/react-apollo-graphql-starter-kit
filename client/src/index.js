@@ -10,6 +10,7 @@ import App from './containers/app';
 import Home from './containers/home';
 import About from './containers/about';
 import BookList from './containers/bookList';
+import BookDetail from './containers/bookDetail';
 
 import './index.css';
 
@@ -59,7 +60,8 @@ const render = Root => {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/about" component={About} />
-            <Route paht="/book-list" component={BookList} />
+            <Route path="/book-list" component={BookList} />
+            <Route path="/book-detail/:id" component={BookDetail} />
           </Switch>
         </Root>
       </HashRouter>

@@ -3,12 +3,11 @@ const { fakeDB } = require('./db');
 const resolvers = {
   Query: {
     books: () => {
-      // return new Promise(resolve => {
-      //   setTimeout(() => {
-      //     resolve(fakeDB.books);
-      //   }, 2000);
-      // });
       return fakeDB.books;
+    },
+    book: (root, { id }) => {
+      const bookFound = fakeDB.books.find(book => book.id === id);
+      return bookFound;
     }
   },
   Mutation: {
@@ -17,6 +16,14 @@ const resolvers = {
       newBook.id = Math.round(Math.random() * 1000000);
       fakeDB.books.push(newBook);
       return newBook;
+    },
+    addMessage: (root, { message }) => {
+      const bookFound = fakeDB.books.find(book => book.id === message.bookId);
+      if (!bookFound) throw new Error('book does not exist');
+      const messageId = bookFound.messages.length + 1;
+      const newMessage = { id: String(messageId), text: message.text };
+      bookFound.messages.push(newMessage);
+      return newMessage;
     }
   }
 };

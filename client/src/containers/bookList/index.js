@@ -1,10 +1,14 @@
 import React from 'react';
 import { Query } from 'react-apollo';
+import PT from 'prop-types';
 
 import AddBook from './AddBook';
 import queryBook from './queries/books';
 
 class BookList extends React.Component {
+  onBookClick(id) {
+    this.props.history.push(`/book-detail/${id}`);
+  }
   render() {
     return (
       <div>
@@ -18,7 +22,10 @@ class BookList extends React.Component {
             if (error) return <p>Error...</p>;
             return data.books.map(book => {
               return (
-                <div key={book.id} className={'book ' + (book.id < 0 ? 'optimistic' : '')}>
+                <div
+                  onClick={() => this.onBookClick(book.id)}
+                  key={book.id}
+                  className={'book ' + (book.id < 0 ? 'optimistic' : '')}>
                   <h3>{book.title}</h3>
                   <p>{book.author}</p>
                 </div>
@@ -30,5 +37,9 @@ class BookList extends React.Component {
     );
   }
 }
+
+BookList.propTypes = {
+  history: PT.object
+};
 
 export default BookList;
