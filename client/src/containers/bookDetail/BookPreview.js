@@ -22,9 +22,10 @@ BookPreview.propTypes = {
 };
 
 export default graphql(bookQuery, {
-  options: {
-    variables: props => {
-      return { bookId: props.bookId };
-    }
+  options: props => {
+    console.log(props);
+    return {
+      variables: { bookId: props.bookId }
+    };
   }
 })(BookPreview);
