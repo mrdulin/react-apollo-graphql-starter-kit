@@ -6,15 +6,24 @@ const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
 const { makeExecutableSchema } = require('graphql-tools');
 
 const config = require('../../webpack.config');
+
 const { typeDefs } = require('./typeDefs');
-const { resolvers } = require('./resolvers');
+const { resolvers } = require('./resolvers/resolvers');
+
+//cnodejs schema
+const { CNodeConnector } = require('./connectors/cnode');
+const CNODE_MODELS = require('./models');
+const { typeDefs: cnodeTypeDefs } = require('./schema');
+const { resolvers: cnodeResolvers } = require('./resolvers');
 
 const app = express();
 const compiler = webpack(config);
 
+console.log(cnodeResolvers);
+
 const schema = makeExecutableSchema({
-  typeDefs,
-  resolvers
+  typeDefs: cnodeTypeDefs,
+  resolvers: cnodeResolvers
 });
 
 app.use(
@@ -22,7 +31,22 @@ app.use(
     publicPath: config.output.publicPath
   })
 );
-app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }));
+app.use(
+  '/graphql',
+  bodyParser.json(),
+  graphqlExpress(req => {
+    const cnodeConnector = new CNodeConnector({
+      API_ROOT_URL: 'https://cnodejs.org/api/v1'
+    });
+    return {
+      req,
+      schema,
+      context: {
+        topics: new CNODE_MODELS.Topics(CNODE_MODELS.Topic, cnodeConnector, [])
+      }
+    };
+  })
+);
 app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
 
 app.listen(3000, function() {

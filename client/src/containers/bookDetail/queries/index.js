@@ -21,7 +21,6 @@ export const bookDetailQuery = gql`
 export const bookQuery = gql`
   query bookQuery($bookId: ID!) {
     book(id: $bookId) {
-      id
       title
       author
     }

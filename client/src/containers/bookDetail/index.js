@@ -8,11 +8,8 @@ import BookPreview from './BookPreview';
 
 class BookDetail extends React.Component {
   render() {
-    const {
-      data: { loading, error, book },
-      match
-    } = this.props;
-    if (loading) return <BookPreview bookId={match.id} />;
+    const { data: { loading, error, book }, match } = this.props;
+    if (loading) return <BookPreview bookId={match.params.id} />;
     if (error) return <p>{error.message}</p>;
     if (book == null) {
       return <p>Not Found</p>;

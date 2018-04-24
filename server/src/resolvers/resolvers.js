@@ -1,4 +1,4 @@
-const { fakeDB } = require('./db');
+const { fakeDB } = require('../db');
 
 const resolvers = {
   Query: {

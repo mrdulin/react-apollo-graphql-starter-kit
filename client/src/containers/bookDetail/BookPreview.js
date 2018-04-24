@@ -6,9 +6,7 @@ import { bookQuery } from './queries';
 
 class BookPreview extends React.Component {
   render() {
-    const {
-      data: { loading, error, book }
-    } = this.props;
+    const { data: { book } } = this.props;
     return (
       <div>
         <h3>{book ? book.title : 'loading...'}</h3>
@@ -22,9 +20,10 @@ BookPreview.propTypes = {
 };
 
 export default graphql(bookQuery, {
-  options: {
-    variables: props => {
-      return { bookId: props.bookId };
-    }
+  options: props => {
+    console.log(props);
+    return {
+      variables: { bookId: props.bookId }
+    };
   }
 })(BookPreview);
