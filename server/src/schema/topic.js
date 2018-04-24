@@ -10,6 +10,13 @@ const topic = `
     create_at: String
     author: Author
   }
+
+  input TopicsInput {
+    page: Int
+    tab: String
+    limit: Int
+    mdrender: String
+  }
 `;
 
 exports.topic = topic;

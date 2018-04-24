@@ -12,8 +12,8 @@ class CNodeConnector {
     return this.http.post(api, body);
   }
 
-  get(api) {
-    return this.http.get(api);
+  get(api, qs) {
+    return this.http.get(api, qs);
   }
 }
 

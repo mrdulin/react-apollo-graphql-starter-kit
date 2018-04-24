@@ -11,8 +11,8 @@ class Topics {
     return this.models;
   }
 
-  getHomeTopics() {
-    return this.connector.get('/topics').then(res => {
+  getHomeTopics(qs) {
+    return this.connector.get('/topics', qs).then(res => {
       const { data = [] } = res;
       return data.map(topic => {
         return new this.Topic(topic, { Author: this.Author, Topics });

@@ -16,6 +16,9 @@ class App extends React.Component {
           <li>
             <Link to="/book-list">BookList</Link>
           </li>
+          <li>
+            <Link to="/topics">Topics</Link>
+          </li>
         </ul>
         <hr />
         {this.props.children}
