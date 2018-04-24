@@ -19,7 +19,7 @@ const { resolvers: cnodeResolvers } = require('./resolvers');
 const app = express();
 const compiler = webpack(config);
 
-console.log(cnodeResolvers);
+// console.log(cnodeResolvers);
 
 const schema = makeExecutableSchema({
   typeDefs: cnodeTypeDefs,
@@ -42,7 +42,14 @@ app.use(
       req,
       schema,
       context: {
-        topics: new CNODE_MODELS.Topics(CNODE_MODELS.Topic, cnodeConnector, [])
+        topics: new CNODE_MODELS.Topics(
+          {
+            Topic: CNODE_MODELS.Topic,
+            Author: CNODE_MODELS.Author
+          },
+          cnodeConnector,
+          []
+        )
       }
     };
   })

@@ -8,7 +8,7 @@ const topic = `
     reply_count: Int
     visit_count: Int
     create_at: String
-    author: [Author]
+    author: Author
   }
 `;
 
