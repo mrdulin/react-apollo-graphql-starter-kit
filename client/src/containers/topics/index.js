@@ -1,9 +1,14 @@
 import React from 'react';
 import { Query } from 'react-apollo';
+import PT from 'prop-types';
 
 import * as Q from './gql';
 
 class Topics extends React.Component {
+  static propTypes = {
+    history: PT.object
+  };
+
   constructor() {
     super();
     this.page = 1;
@@ -11,6 +16,7 @@ class Topics extends React.Component {
   }
   onLoadMore(fetchMore) {
     const page = this.page + 1;
+    this.page = page;
     return fetchMore({
       variables: {
         qs: {
@@ -25,6 +31,10 @@ class Topics extends React.Component {
         });
       }
     });
+  }
+
+  onTopicClick(topic) {
+    this.props.history.push(`/topic/${topic.id}`);
   }
   render() {
     return (
@@ -45,7 +55,11 @@ class Topics extends React.Component {
               <div>
                 <ul>
                   {topics.map(topic => {
-                    return <li key={topic.id}>{topic.title}</li>;
+                    return (
+                      <li onClick={() => this.onTopicClick(topic)} key={topic.id}>
+                        {topic.title}
+                      </li>
+                    );
                   })}
                 </ul>
                 <button type="button" onClick={() => this.onLoadMore(fetchMore)}>

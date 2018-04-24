@@ -42,15 +42,23 @@ app.use(
       req,
       schema,
       context: {
+        topic: new CNODE_MODELS.Topic(
+          null,
+          {
+            Author: CNODE_MODELS.Author,
+            Topics: CNODE_MODELS.Topics
+          },
+          cnodeConnector
+        ),
         topics: new CNODE_MODELS.Topics(
           {
             Topic: CNODE_MODELS.Topic,
             Author: CNODE_MODELS.Author
           },
-          cnodeConnector,
-          []
+          cnodeConnector
         )
-      }
+      },
+      tracing: true
     };
   })
 );
