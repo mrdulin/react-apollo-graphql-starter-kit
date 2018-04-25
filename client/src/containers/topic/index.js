@@ -26,7 +26,24 @@ class Topic extends React.Component {
             return (
               <div>
                 <h3>{topic.title}</h3>
-                <section dangerouslySetInnerHTML={{ __html: topic.content }} />
+                <div>
+                  <span>作者：</span>
+                  <a>
+                    <img className="avatar" src={topic.author.avatar_url} alt="avatar" />
+                  </a>
+                  <span>{topic.author.loginname}</span>
+                </div>
+                <article dangerouslySetInnerHTML={{ __html: topic.content }} />
+                <hr />
+                <section>
+                  {topic.replies.map(reply => {
+                    return (
+                      <div key={reply.id}>
+                        <div dangerouslySetInnerHTML={{ __html: reply.content }} />
+                      </div>
+                    );
+                  })}
+                </section>
               </div>
             );
           }}

@@ -9,6 +9,15 @@ export const getTopicById = gql`
       create_at
       visit_count
       tab
+      author {
+        id
+        loginname
+        avatar_url
+      }
+      replies {
+        id
+        content
+      }
     }
   }
 `;

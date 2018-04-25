@@ -4,7 +4,8 @@ const reply = `
     author: Author!
     content: String!
     create_at: String
-    reply_id: ID!
+    reply_id: ID
+    ups: [ID]
   }
 `;
 

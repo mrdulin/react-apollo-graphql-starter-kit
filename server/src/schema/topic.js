@@ -9,6 +9,7 @@ const topic = `
     visit_count: Int
     create_at: String
     author: Author
+    replies: [Reply]
   }
 
   input TopicsInput {
