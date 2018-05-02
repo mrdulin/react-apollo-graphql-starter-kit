@@ -26,11 +26,16 @@ module.exports = {
       {
         test: /\.js$/,
         include: [src],
-        loader: 'babel-loader'
+        use: 'babel-loader'
       },
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.(graphql|gql)$/,
+        exclude: /node_modules/,
+        use: 'graphql-tag/loader'
       }
     ]
   },

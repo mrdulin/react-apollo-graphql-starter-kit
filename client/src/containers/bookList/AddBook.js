@@ -1,9 +1,9 @@
 import React from 'react';
 import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
 import PT from 'prop-types';
 
-import queryBook from './queries/books';
+import * as Q from './query.gql';
+import * as M from './mutation.gql';
 
 class AddBook extends React.Component {
   constructor() {
@@ -31,12 +31,12 @@ class AddBook extends React.Component {
           }
         },
         update: (store, res) => {
-          const data = store.readQuery({ query: queryBook });
+          const data = store.readQuery({ query: Q.getBooks });
           console.log(res);
           const book = res.data.addBook;
           // book.id = Math.round(Math.random() * -1000000);
           data.books.push(book);
-          store.writeQuery({ query: queryBook, data });
+          store.writeQuery({ query: Q.getBooks, data });
         }
         // mutation完毕后重新去graphql服务器查询
         // refetchQueries: [{ query: queryBook }]
@@ -61,14 +61,4 @@ AddBook.propTypes = {
   mutate: PT.func
 };
 
-const addBookMutation = gql`
-  mutation addBook($book: BookInput) {
-    addBook(book: $book) {
-      id
-      title
-      author
-    }
-  }
-`;
-
-export default graphql(addBookMutation)(AddBook);
+export default graphql(M.addBook)(AddBook);

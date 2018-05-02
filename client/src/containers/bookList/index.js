@@ -3,7 +3,7 @@ import { Query } from 'react-apollo';
 import PT from 'prop-types';
 
 import AddBook from './AddBook';
-import queryBook from './queries/books';
+import * as Q from './query.gql';
 
 class BookList extends React.Component {
   onBookClick(id) {
@@ -14,7 +14,7 @@ class BookList extends React.Component {
       <div>
         <AddBook />
         <Query
-          query={queryBook}
+          query={Q.getBooks}
           // pollInterval={5000}
         >
           {({ loading, error, data }) => {

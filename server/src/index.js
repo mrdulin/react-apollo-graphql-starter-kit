@@ -7,23 +7,18 @@ const { makeExecutableSchema } = require('graphql-tools');
 
 const config = require('../../webpack.config');
 
-const { typeDefs } = require('./typeDefs');
-const { resolvers } = require('./resolvers/resolvers');
-
 //cnodejs schema
 const { CNodeConnector } = require('./connectors/cnode');
 const CNODE_MODELS = require('./models');
-const { typeDefs: cnodeTypeDefs } = require('./schema');
-const { resolvers: cnodeResolvers } = require('./resolvers');
+const { typeDefs } = require('./schema');
+const { resolvers } = require('./resolvers');
 
 const app = express();
 const compiler = webpack(config);
 
-// console.log(cnodeResolvers);
-
 const schema = makeExecutableSchema({
-  typeDefs: cnodeTypeDefs,
-  resolvers: cnodeResolvers
+  typeDefs,
+  resolvers
 });
 
 app.use(

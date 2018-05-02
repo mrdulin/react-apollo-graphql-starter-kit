@@ -1,6 +1,7 @@
 const schemaDef = `
   schema {
     query: Query
+    mutation: Mutation
   }
 `;
 
