@@ -38,7 +38,7 @@ const cache = new InMemoryCache({
   cacheRedirects: {
     Query: {
       book: (_, args) => {
-        // console.log('cacheRedirects args: ', args);
+        console.log('cacheRedirects args: ', args);
         return toIdValue(cache.config.dataIdFromObject({ __typename: 'Book', id: args.id }));
       }
     }

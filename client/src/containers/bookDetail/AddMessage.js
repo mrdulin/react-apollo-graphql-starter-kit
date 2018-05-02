@@ -1,9 +1,9 @@
 import React from 'react';
 import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
 import PT from 'prop-types';
 
-import { bookDetailQuery } from './queries';
+import * as Q from './query.gql';
+import * as M from './mutation.gql';
 
 class AddMessage extends React.Component {
   constructor(props) {
@@ -31,13 +31,13 @@ class AddMessage extends React.Component {
         },
         update: (store, res) => {
           const data = store.readQuery({
-            query: bookDetailQuery,
+            query: Q.bookDetailQuery,
             variables
           });
           const message = res.data.addMessage;
           data.book.messages.push(message);
           store.writeQuery({
-            query: bookDetailQuery,
+            query: Q.bookDetailQuery,
             variables,
             data
           });
@@ -64,13 +64,4 @@ AddMessage.propTypes = {
   match: PT.object
 };
 
-const addMessageMutation = gql`
-  mutation addMessage($message: MessageInput!) {
-    addMessage(message: $message) {
-      id
-      text
-    }
-  }
-`;
-
-export default graphql(addMessageMutation)(AddMessage);
+export default graphql(M.addMessage)(AddMessage);

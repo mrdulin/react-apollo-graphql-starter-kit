@@ -2,11 +2,13 @@ import React from 'react';
 import { graphql } from 'react-apollo';
 import PT from 'prop-types';
 
-import { bookQuery } from './queries';
+import * as Q from './query.gql';
 
 class BookPreview extends React.Component {
   render() {
-    const { data: { book } } = this.props;
+    const {
+      data: { book }
+    } = this.props;
     return (
       <div>
         <h3>{book ? book.title : 'loading...'}</h3>
@@ -19,7 +21,7 @@ BookPreview.propTypes = {
   data: PT.object
 };
 
-export default graphql(bookQuery, {
+export default graphql(Q.bookQuery, {
   options: props => {
     console.log(props);
     return {

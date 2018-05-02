@@ -4,6 +4,10 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const bodyParser = require('body-parser');
 const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
 const { makeExecutableSchema } = require('graphql-tools');
+const { execute, subscribe } = require('graphql');
+const { createServer } = require('http');
+const { SubscriptionServer } = require('subscriptions-transport-ws');
+const cors = require('cors');
 
 const config = require('../../webpack.config');
 
@@ -14,6 +18,7 @@ const { typeDefs } = require('./schema');
 const { resolvers } = require('./resolvers');
 
 const app = express();
+const PORT = 3000;
 const compiler = webpack(config);
 
 const schema = makeExecutableSchema({
@@ -21,6 +26,7 @@ const schema = makeExecutableSchema({
   resolvers
 });
 
+app.use('*', cors({ origin: `http://localhost:${PORT}` }));
 app.use(
   webpackDevMiddleware(compiler, {
     publicPath: config.output.publicPath
@@ -57,8 +63,27 @@ app.use(
     };
   })
 );
-app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
+app.use(
+  '/graphiql',
+  graphiqlExpress({
+    endpointURL: '/graphql',
+    subscriptionsEndpoint: `ws://localhost:${PORT}/subscriptions`
+  })
+);
 
-app.listen(3000, function() {
-  console.log('Example app listening on port 3000!\n');
+const ws = createServer(app);
+
+ws.listen(PORT, () => {
+  console.log(`Example app listening on port ${PORT}!\n`);
+  new SubscriptionServer(
+    {
+      execute,
+      subscribe,
+      schema
+    },
+    {
+      server: ws,
+      path: '/subscriptions'
+    }
+  );
 });

@@ -34,7 +34,6 @@ class AddBook extends React.Component {
           const data = store.readQuery({ query: Q.getBooks });
           console.log(res);
           const book = res.data.addBook;
-          // book.id = Math.round(Math.random() * -1000000);
           data.books.push(book);
           store.writeQuery({ query: Q.getBooks, data });
         }

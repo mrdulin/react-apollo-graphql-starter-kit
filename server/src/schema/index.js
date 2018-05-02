@@ -6,6 +6,7 @@ const { message } = require('./message');
 
 const { query } = require('./query');
 const { mutation } = require('./mutation');
+const { subscription } = require('./subscription');
 const { schemaDef } = require('./schemaDef');
 
-exports.typeDefs = [schemaDef, book, message, author, reply, topic, query, mutation];
+exports.typeDefs = [schemaDef, book, message, author, reply, topic, query, mutation, subscription];
