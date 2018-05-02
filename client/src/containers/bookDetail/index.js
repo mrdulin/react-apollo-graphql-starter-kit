@@ -3,11 +3,41 @@ import { graphql } from 'react-apollo';
 import PT from 'prop-types';
 
 import * as Q from './query.gql';
+import * as S from './subscription.gql';
 
 import AddMessage from './AddMessage';
 import BookPreview from './BookPreview';
 
 class BookDetail extends React.Component {
+  componentWillMount() {
+    console.log(this.props);
+    const { match } = this.props;
+
+    this.props.data.subscribeToMore({
+      document: S.messageAdded,
+      variables: {
+        bookId: match.params.id
+      },
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) {
+          return prev;
+        }
+
+        const newMessage = subscriptionData.data.messageAdded;
+        const existed = prev.book.messages.findIndex(msg => msg.id === newMessage.id) !== -1;
+        if (existed) {
+          return prev;
+        } else {
+          return Object.assign({}, prev, {
+            book: Object.assign({}, prev.book, {
+              messages: [...prev.book.messages, newMessage]
+            })
+          });
+        }
+      }
+    });
+  }
+
   render() {
     const {
       data: { loading, error, book },

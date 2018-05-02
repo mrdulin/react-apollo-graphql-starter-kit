@@ -35,7 +35,10 @@ class AddMessage extends React.Component {
             variables
           });
           const message = res.data.addMessage;
-          data.book.messages.push(message);
+          const existed = data.book.messages.findIndex(msg => msg.id === message.id) !== -1;
+          if (!existed) {
+            data.book.messages.push(message);
+          }
           store.writeQuery({
             query: Q.bookDetailQuery,
             variables,
