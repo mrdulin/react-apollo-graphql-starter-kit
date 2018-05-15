@@ -20,6 +20,9 @@ const { resolvers } = require('./resolvers');
 const app = express();
 const PORT = 3000;
 const compiler = webpack(config);
+const env = process.env.NODE_ENV || 'development';
+
+console.log('env: ', env);
 
 const schema = makeExecutableSchema({
   typeDefs,
