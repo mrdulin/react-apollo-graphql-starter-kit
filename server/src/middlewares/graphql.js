@@ -3,6 +3,7 @@ const { graphqlExpress } = require('apollo-server-express');
 const { appConfig } = require('../config');
 const { CNodeConnector } = require('../connectors/cnode');
 const CNODE_MODELS = require('../models');
+const { lowdb } = require('../database/lowdb');
 
 function createGraphqlExpressHandler(opts) {
   return graphqlExpress(req => {
@@ -13,6 +14,7 @@ function createGraphqlExpressHandler(opts) {
       req,
       schema: opts.schema,
       context: {
+        lowdb,
         topic: new CNODE_MODELS.Topic(
           null,
           {

@@ -1,16 +1,10 @@
-const { fakeDB } = require('../db');
 const { PubSub } = require('graphql-subscriptions');
 const path = require('path');
 const shortid = require('shortid');
-const low = require('lowdb');
-const FileSync = require('lowdb/adapters/FileSync');
+
 const mkdirp = require('mkdirp');
 const fs = require('fs');
-
-const adapter = new FileSync(path.resolve(__dirname, '../database/lowdb.json'));
-const db = low(adapter);
-
-db.defaults({ uploads: [] }).write();
+const { lowdb } = require('../database/lowdb');
 
 const pubsub = new PubSub();
 exports.pubsub = pubsub;
@@ -38,7 +32,7 @@ function storeFS({ stream, filename }) {
 }
 
 function storeDB(file) {
-  return db
+  return lowdb
     .get('uploads')
     .push(file)
     .last()
@@ -57,18 +51,20 @@ async function processUpload(upload) {
 }
 
 exports.Mutation = {
-  addBook: (root, args) => {
-    const newBook = args.book;
-    newBook.id = Math.round(Math.random() * 1000000);
-    fakeDB.books.push(newBook);
-    return newBook;
+  addBook: (root, args, context) => {
+    const { book } = args;
+    book.id = shortid.generate();
+    return context.lowdb
+      .get('books')
+      .last()
+      .push(book);
   },
-  addMessage: (root, { message }) => {
-    const bookFound = fakeDB.books.find(book => book.id === message.bookId);
-    if (!bookFound) throw new Error('book does not exist');
-    const messageId = bookFound.messages.length + 1;
-    const newMessage = { id: String(messageId), text: message.text };
-    bookFound.messages.push(newMessage);
+  addMessage: (root, { message }, context) => {
+    const book = context.lowdb.get('books').find({ id: message.bookId });
+    if (!book) throw new Error('book does not exist');
+    const messageId = shortid.generate();
+    const newMessage = { id: messageId, text: message.text };
+    book.messages.push(newMessage);
 
     pubsub.publish('messageAdded', { messageAdded: newMessage, bookId: message.bookId });
     return newMessage;

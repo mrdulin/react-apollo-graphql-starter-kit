@@ -10,4 +10,4 @@ const { mutation } = require('./mutation');
 const { subscription } = require('./subscription');
 const { schemaDef } = require('./schemaDef');
 
-exports.typeDefs = [schemaDef, book, message, author, reply, topic, query, mutation, subscription, file];
+exports.typeDefs = [schemaDef, book, message, author, reply, topic, file, query, mutation, subscription];

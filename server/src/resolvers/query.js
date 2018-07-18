@@ -18,5 +18,9 @@ exports.Query = {
       }, 2000);
     });
     // return bookFound;
+  },
+  uploads: (root, args, context) => {
+    const files = context.lowdb.get('uploads').value();
+    return files;
   }
 };
