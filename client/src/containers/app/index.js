@@ -19,6 +19,9 @@ class App extends React.Component {
           <li>
             <Link to="/topics">Topics</Link>
           </li>
+          <li>
+            <Link to="/upload">Upload</Link>
+          </li>
         </ul>
         <hr />
         {this.props.children}

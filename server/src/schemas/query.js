@@ -4,6 +4,7 @@ const query = `
     topic(id: ID!): Topic
     books: [Book]
     book(id: ID!): Book
+    uploads: [File]
   }
 `;
 
