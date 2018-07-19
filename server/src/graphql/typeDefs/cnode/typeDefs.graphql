@@ -1,0 +1,40 @@
+type Author {
+  id: ID!
+  loginname: String!
+  avatar_url: String
+  topic_collect: [Topic]
+}
+
+type Reply {
+  id: ID!
+  author: Author!
+  content: String!
+  create_at: String
+  reply_id: ID
+  ups: [ID]
+}
+
+type Topic {
+  id: ID!
+  author_id: ID!
+  tab: String
+  content: String
+  title: String
+  reply_count: Int
+  visit_count: Int
+  create_at: String
+  author: Author
+  replies: [Reply]
+}
+
+input TopicsInput {
+  page: Int
+  tab: String
+  limit: Int
+  mdrender: String
+}
+
+type Query {
+  topics(qs: TopicsInput): [Topic]
+  topic(id: ID!): Topic
+}

@@ -1,4 +1,4 @@
-const rp = require('../utils/http');
+const rp = require('../../utils/http');
 
 class CNodeConnector {
   constructor(options) {

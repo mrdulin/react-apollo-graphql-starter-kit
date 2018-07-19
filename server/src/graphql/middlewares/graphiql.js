@@ -1,6 +1,6 @@
 const { graphiqlExpress } = require('apollo-server-express');
 
-const { appConfig } = require('../config');
+const { appConfig } = require('../../config');
 
 const graphiqlExpressHandler = graphiqlExpress({
   endpointURL: appConfig.GRAPHQL_ENDPOINT,
