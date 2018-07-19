@@ -44,23 +44,20 @@ const cache = new InMemoryCache({
   }
 });
 
-// const networkLink = split(
-//   ({ query }) => {
-//     const { kind, operation } = getMainDefinition(query);
-//     return kind === 'OperationDefinition' && operation === 'subscription';
-//   },
-//   wsLink,
-//   httpLink
-// );
+const networkLink = split(
+  ({ query }) => {
+    const { kind, operation } = getMainDefinition(query);
+    return kind === 'OperationDefinition' && operation === 'subscription';
+  },
+  wsLink,
+  httpLink
+);
 
 const isFile = value =>
   (typeof File !== 'undefined' && value instanceof File) || (typeof Blob !== 'undefined' && value instanceof Blob);
 
-const isUpload = ({ variables }) => {
-  return Object.values(variables).some(isFile);
-};
-
-const terminalLink = split(isUpload, uploadLink, httpLink);
+const isUpload = ({ variables }) => Object.values(variables).some(isFile);
+const terminalLink = split(isUpload, uploadLink, networkLink);
 
 const client = new ApolloClient({
   cache,

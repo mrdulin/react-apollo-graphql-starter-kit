@@ -15,12 +15,12 @@ class AddMessage extends React.Component {
     evt.preventDefault();
     const { match } = this.props;
     const bookId = match.params.id;
-    const variables = { bookId };
+    const message = { bookId, text };
     const text = this.input.value;
     this.props
       .mutate({
         variables: {
-          message: { bookId, text }
+          message
         },
         optimisticResponse: {
           addMessage: {
@@ -32,7 +32,7 @@ class AddMessage extends React.Component {
         update: (store, res) => {
           const data = store.readQuery({
             query: Q.bookDetailQuery,
-            variables
+            variables: { message }
           });
           const message = res.data.addMessage;
           const existed = data.book.messages.findIndex(msg => msg.id === message.id) !== -1;
@@ -41,7 +41,7 @@ class AddMessage extends React.Component {
           }
           store.writeQuery({
             query: Q.bookDetailQuery,
-            variables,
+            variables: { message },
             data
           });
         }

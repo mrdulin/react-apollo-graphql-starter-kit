@@ -19,6 +19,7 @@ module.exports = {
     addBook: (root, args, context) => {
       const { book } = args;
       book.id = shortid.generate();
+      book.messages = [];
       return context.lowdb
         .get('books')
         .push(book)
@@ -36,16 +37,13 @@ module.exports = {
 
       pubsub.publish('messageAdded', { messageAdded: newMessage, bookId: message.bookId });
 
-      const msg = context.lowdb
+      return context.lowdb
         .get('books')
         .find({ id: message.bookId })
         .get('messages')
         .push(newMessage)
-        .value();
-
-      console.log('msg: ', msg);
-
-      return newMessage;
+        .last()
+        .write();
     }
   },
   Subscription: {
