@@ -56,17 +56,30 @@ exports.Mutation = {
     book.id = shortid.generate();
     return context.lowdb
       .get('books')
+      .push(book)
       .last()
-      .push(book);
+      .write();
   },
   addMessage: (root, { message }, context) => {
-    const book = context.lowdb.get('books').find({ id: message.bookId });
+    const book = context.lowdb
+      .get('books')
+      .find({ id: message.bookId })
+      .value();
     if (!book) throw new Error('book does not exist');
     const messageId = shortid.generate();
     const newMessage = { id: messageId, text: message.text };
-    book.messages.push(newMessage);
 
     pubsub.publish('messageAdded', { messageAdded: newMessage, bookId: message.bookId });
+
+    const msg = context.lowdb
+      .get('books')
+      .find({ id: message.bookId })
+      .get('messages')
+      .push(newMessage)
+      .value();
+
+    console.log('msg: ', msg);
+
     return newMessage;
   },
   singleUpload: (root, args) => {

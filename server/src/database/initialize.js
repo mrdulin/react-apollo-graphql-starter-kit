@@ -20,4 +20,4 @@ const books = [
   }
 ];
 
-lowdb.set('books', books);
+lowdb.set('books', books).write();

@@ -20,6 +20,44 @@
       "mimetype": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       "encoding": "7bit",
       "filename": "DOCB487.docx"
+    },
+    {
+      "id": "jgksq8JU3",
+      "filepath": "/Users/ldu020/workspace/react-apollo-graphql/server/uploads/jgksq8JU3-ssr3512.png",
+      "mimetype": "image/png",
+      "encoding": "7bit",
+      "filename": "ssr3512.png"
+    },
+    {
+      "id": "qzTai5AoH",
+      "filepath": "/Users/ldu020/workspace/react-apollo-graphql/server/uploads/qzTai5AoH-ssr3512.png",
+      "mimetype": "image/png",
+      "encoding": "7bit",
+      "filename": "ssr3512.png"
+    }
+  ],
+  "books": [
+    {
+      "id": "1",
+      "title": "Harry Potter and the Sorcerer's stone",
+      "author": "J.K. Rowling",
+      "messages": [
+        {
+          "id": "1",
+          "text": "baseball is life"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "title": "Jurassic Park",
+      "author": "Michael Crichton",
+      "messages": []
+    },
+    {
+      "title": "angular",
+      "author": "mrdulin",
+      "id": "CzwOM5139"
     }
   ]
 }

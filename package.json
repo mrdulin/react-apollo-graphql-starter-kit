@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "node ./server/src",
     "start": "webpack-dev-server",
-    "clean:uploads": "rm -rf server/uploads/** & rm server/src/database/lowdb.json"
+    "clean:uploads": "rm -rf server/uploads/** & rm server/src/database/lowdb.json",
+    "seed": "node server/src/database/initialize.js"
   },
   "repository": {
     "type": "git",
