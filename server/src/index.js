@@ -21,11 +21,11 @@ createWsServer({
   wsPath: appConfig.WS_PATH
 });
 
-app.use('*', cors({ origin: `http://localhost:${appConfig.PORT}` }));
 app.use(
   webpackDevMiddleware(compiler, {
     publicPath: config.output.publicPath
   })
 );
+app.use(cors());
 app.use(appConfig.GRAPHQL_ENDPOINT, bodyParser.json(), apolloUploadExpress(), createGraphqlExpressHandler({ schema }));
 app.use(appConfig.GRAPHIQL_ENDPOINT, graphiqlExpressHandler);
