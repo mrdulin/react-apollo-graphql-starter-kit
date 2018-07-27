@@ -61,9 +61,9 @@ module.exports = {
         return data;
       });
     },
-    mutipleUpload: (root, args) => {
-      console.log(args);
-      return 'mutiple upload';
+    multipleUpload: async (root, { files }, ctx) => {
+      const processUploadPromises = files.map(file => processUpload(file, ctx.lowdb));
+      return await Promise.all(processUploadPromises);
     }
   }
 };

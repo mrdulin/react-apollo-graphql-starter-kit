@@ -12,7 +12,9 @@ class Upload extends Component {
         <section>
           <UploadFile mutation={M.singleUpload} />
         </section>
-        <section>mutilple file upload</section>
+        <section>
+          <UploadFile multiple mutation={M.multipleUpload} />
+        </section>
         <section>
           <Query query={Q.uploads}>
             {({ error, loading, data }) => {

@@ -54,7 +54,9 @@ const networkLink = split(
 );
 
 const isFile = value =>
-  (typeof File !== 'undefined' && value instanceof File) || (typeof Blob !== 'undefined' && value instanceof Blob);
+  (typeof File !== 'undefined' && value instanceof File) ||
+  (typeof Blob !== 'undefined' && value instanceof Blob) ||
+  (typeof FileList !== 'undefined' && value instanceof FileList);
 
 const isUpload = ({ variables }) => Object.values(variables).some(isFile);
 const terminalLink = split(isUpload, uploadLink, networkLink);

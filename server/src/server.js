@@ -15,7 +15,7 @@ function createWsServer(options) {
         schema,
         onConnect: (connectionParams, webSocket, context) => {
           console.log('onConnect\n');
-          console.log(connectionParams, context);
+          // console.log(connectionParams, context);
           return connectionParams;
         },
         onOperation: (message, params, webSocket) => {

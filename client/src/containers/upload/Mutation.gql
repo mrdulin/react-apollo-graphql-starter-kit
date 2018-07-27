@@ -4,3 +4,10 @@ mutation singleUpload($file: Upload!) {
     filename
   }
 }
+
+mutation multipleUpload($files: [Upload!]!) {
+  multipleUpload(files: $files) {
+    id
+    filename
+  }
+}
