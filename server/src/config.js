@@ -7,7 +7,9 @@ const appConfig = {
   ENV: process.env.NODE_ENV || 'development',
   cnodejs: {
     accessToken: '426634ce-c482-43d7-a1d6-5271b180a510'
-  }
+  },
+  JWT_SCERET: 'what-the-fuck??',
+  JWT_EXPIRES: 60 * 1000
 };
 
 exports.appConfig = appConfig;

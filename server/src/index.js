@@ -10,16 +10,16 @@ const config = require('../../webpack.config');
 const { createWsServer } = require('./server');
 const { appConfig } = require('./config');
 const { schema } = require('./graphql/schema');
-const { CNodeConnector, MongoConnector, LowdbConnector } = require('./graphql/connectors');
+const { CNodeConnector, MongoConnector } = require('./graphql/connectors');
 const { MongoConnect } = require('./database/mongodb');
 const { lowdb } = require('./database/lowdb');
-
-const { Book, Topic } = require('./graphql/models');
+const { authMiddleware } = require('./middlewares');
+const { Book, Topic, User } = require('./graphql/models');
 
 const app = express();
 const compiler = webpack(config);
 
-const Mongoose = MongoConnect();
+// const Mongoose = MongoConnect();
 
 createWsServer({
   app,
@@ -34,23 +34,25 @@ app.use(
   })
 );
 app.use(cors());
+app.use(authMiddleware);
 app.use(
   appConfig.GRAPHQL_ENDPOINT,
   bodyParser.json(),
   apolloUploadExpress(),
   graphqlExpress(req => {
     return {
-      req,
       schema,
       context: {
+        user: req.user,
         conn: {
           cnode: new CNodeConnector({ API_ROOT_URL: appConfig.API_ROOT_URL }),
-          mongo: new MongoConnector(Mongoose),
-          lowdb: new LowdbConnector(lowdb)
+          // mongo: new MongoConnector(Mongoose),
+          lowdb
         },
         models: {
           Book: new Book(),
-          Topic: new Topic()
+          Topic: new Topic(),
+          User: new User()
         }
       },
       tracing: true
@@ -64,20 +66,3 @@ app.use(
     subscriptionsEndpoint: `ws://localhost:${appConfig.PORT}${appConfig.WS_PATH}`
   })
 );
-
-// lowdb,
-// topic: new CNODE_MODELS.Topic(
-//   null,
-//   {
-//     Author: CNODE_MODELS.Author,
-//     Topics: CNODE_MODELS.Topics
-//   },
-//   cnodeConnector
-// ),
-// topics: new CNODE_MODELS.Topics(
-//   {
-//     Topic: CNODE_MODELS.Topic,
-//     Author: CNODE_MODELS.Author
-//   },
-//   cnodeConnector
-// )

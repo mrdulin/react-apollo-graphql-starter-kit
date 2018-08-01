@@ -15,13 +15,15 @@ class Book {
   }
 
   create(book, ctx) {
-    book.id = shortid.generate();
-    book.messages = [];
-    return ctx.lowdb
-      .get('books')
-      .push(book)
-      .last()
-      .write();
+    if (ctx.models.User.isAuth(ctx)) {
+      book.id = shortid.generate();
+      book.messages = [];
+      return ctx.lowdb
+        .get('books')
+        .push(book)
+        .last()
+        .write();
+    }
   }
 }
 

@@ -29,5 +29,24 @@
       "filename": "vimium-options.json"
     }
   ],
-  "books": []
+  "books": [],
+  "user": [],
+  "users": [
+    {
+      "_id": "jemr5zWf2",
+      "email": "novaline@qq.com",
+      "name": "",
+      "password": "$2b$12$hAe0beYKz91bHAaBZQiTh.re19vVakE6ioYg4qn.IFTeL/Csk5rB6"
+    },
+    {
+      "_id": "L3xIvmjOx",
+      "email": "123@qq.com",
+      "name": ""
+    },
+    {
+      "_id": "kErPVR7kz",
+      "email": "321@qq.com",
+      "name": ""
+    }
+  ]
 }

@@ -5,6 +5,6 @@ const path = require('path');
 const adapter = new FileSync(path.resolve(__dirname, './lowdb.json'));
 const lowdb = low(adapter);
 
-lowdb.defaults({ uploads: [], books: [] }).write();
+lowdb.defaults({ uploads: [], books: [], users: [] }).write();
 
 exports.lowdb = lowdb;
