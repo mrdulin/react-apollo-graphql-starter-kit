@@ -22,7 +22,7 @@ input MessageInput {
 
 type Query {
   books: [Book!]!
-  book(id: ID!): Book
+  bookById(id: ID!): Book
 }
 
 type Mutation {

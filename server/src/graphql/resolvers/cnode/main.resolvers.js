@@ -1,10 +1,10 @@
 module.exports = {
   Query: {
-    topics: (_, args, ctx) => {
-      return ctx.topics.getHomeTopics(args.qs);
+    topics: (_, { qs }, ctx) => {
+      return ctx.models.Topic.getHomeTopics(qs, ctx);
     },
     topic: (_, { id }, ctx) => {
-      return ctx.topic.getTopicById(id);
+      return ctx.Topic.getTopicById(id, ctx);
     }
   }
 };

@@ -4,15 +4,22 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const { apolloUploadExpress } = require('apollo-upload-server');
+const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
 
 const config = require('../../webpack.config');
 const { createWsServer } = require('./server');
 const { appConfig } = require('./config');
 const { schema } = require('./graphql/schema');
-const { graphiqlExpressHandler, createGraphqlExpressHandler } = require('./graphql/middlewares');
+const { CNodeConnector, MongoConnector, LowdbConnector } = require('./graphql/connectors');
+const { MongoConnect } = require('./database/mongodb');
+const { lowdb } = require('./database/lowdb');
+
+const { Book, Topic } = require('./graphql/models');
 
 const app = express();
 const compiler = webpack(config);
+
+const Mongoose = MongoConnect();
 
 createWsServer({
   app,
@@ -27,5 +34,50 @@ app.use(
   })
 );
 app.use(cors());
-app.use(appConfig.GRAPHQL_ENDPOINT, bodyParser.json(), apolloUploadExpress(), createGraphqlExpressHandler({ schema }));
-app.use(appConfig.GRAPHIQL_ENDPOINT, graphiqlExpressHandler);
+app.use(
+  appConfig.GRAPHQL_ENDPOINT,
+  bodyParser.json(),
+  apolloUploadExpress(),
+  graphqlExpress(req => {
+    return {
+      req,
+      schema,
+      context: {
+        conn: {
+          cnode: new CNodeConnector({ API_ROOT_URL: appConfig.API_ROOT_URL }),
+          mongo: new MongoConnector(Mongoose),
+          lowdb: new LowdbConnector(lowdb)
+        },
+        models: {
+          Book: new Book(),
+          Topic: new Topic()
+        }
+      },
+      tracing: true
+    };
+  })
+);
+app.use(
+  appConfig.GRAPHIQL_ENDPOINT,
+  graphiqlExpress({
+    endpointURL: appConfig.GRAPHQL_ENDPOINT,
+    subscriptionsEndpoint: `ws://localhost:${appConfig.PORT}${appConfig.WS_PATH}`
+  })
+);
+
+// lowdb,
+// topic: new CNODE_MODELS.Topic(
+//   null,
+//   {
+//     Author: CNODE_MODELS.Author,
+//     Topics: CNODE_MODELS.Topics
+//   },
+//   cnodeConnector
+// ),
+// topics: new CNODE_MODELS.Topics(
+//   {
+//     Topic: CNODE_MODELS.Topic,
+//     Author: CNODE_MODELS.Author
+//   },
+//   cnodeConnector
+// )
