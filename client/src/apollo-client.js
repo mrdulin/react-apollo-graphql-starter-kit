@@ -4,6 +4,7 @@ import { toIdValue, getMainDefinition } from 'apollo-utilities';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
 import { WebSocketLink } from 'apollo-link-ws';
 import { createUploadLink } from 'apollo-upload-client';
+import { onError } from 'apollo-link-error';
 
 const GRAPHQL_ENDPOINT = '/graphql';
 
@@ -18,9 +19,10 @@ const uploadLink = createUploadLink({ uri: GRAPHQL_ENDPOINT });
 
 const httpLink = new HttpLink({ uri: GRAPHQL_ENDPOINT });
 const authMiddleware = new ApolloLink((operation, forward) => {
+  const jwt = localStorage.getItem('jwt') || '';
   operation.setContext({
     headers: {
-      Authorization: localStorage.getItem('token') || 'default token'
+      Authorization: `Bearer ${jwt}`
     }
   });
 
@@ -61,9 +63,18 @@ const isFile = value =>
 const isUpload = ({ variables }) => Object.values(variables).some(isFile);
 const terminalLink = split(isUpload, uploadLink, networkLink);
 
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  debugger;
+  if (graphQLErrors)
+    graphQLErrors.map(({ message, locations, path }) =>
+      console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`)
+    );
+  if (networkError) console.log(`[Network error]: ${networkError}`);
+});
+
 const client = new ApolloClient({
   cache,
-  link: from([authMiddleware, terminalLink])
+  link: from([authMiddleware, errorLink, terminalLink])
 });
 
 export { client as apolloClient };

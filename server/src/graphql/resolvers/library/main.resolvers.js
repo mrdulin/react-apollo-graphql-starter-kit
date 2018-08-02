@@ -8,7 +8,7 @@ module.exports = {
       return ctx.models.Book.getAll(ctx);
     },
     bookById: (root, { id }, ctx) => {
-      return ctx.models.Book.getById(id);
+      return ctx.models.Book.getById(id, ctx);
     }
   },
   Mutation: {

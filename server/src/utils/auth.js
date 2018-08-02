@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { appConfig } = require('../config');
+const { AppError } = require('./error');
 
 function auth(context) {
   let token;
@@ -21,7 +22,8 @@ function auth(context) {
     return user;
   } catch (error) {
     console.log(error);
-    throw new Error('authorization failed');
+    // throw new Error('authorization failed');
+    throw new AppError({ msg: 'authorization failed', code: 1001 });
   }
 }
 

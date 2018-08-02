@@ -2,7 +2,7 @@
 #下面就是一个对特定book的查询，messages字段就是books列表查询中没有的字段，因此该特定查询Apollo client无法从缓存中返回数据
 
 query bookDetailQuery($bookId: ID!) {
-  book(id: $bookId) {
+  bookById(id: $bookId) {
     id
     title
     author
@@ -14,7 +14,7 @@ query bookDetailQuery($bookId: ID!) {
 }
 
 query bookQuery($bookId: ID!) {
-  book(id: $bookId) {
+  bookById(id: $bookId) {
     title
     author
   }

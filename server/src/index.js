@@ -64,6 +64,10 @@ app.use(
           User: new User()
         }
       },
+      formatError: error => {
+        const { code, message } = error.originalError;
+        return { code, message };
+      },
       tracing: true
     };
   })

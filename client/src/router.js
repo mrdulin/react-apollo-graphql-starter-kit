@@ -9,6 +9,9 @@ import BookDetail from './containers/bookDetail';
 import Topics from './containers/topics';
 import Topic from './containers/topic';
 import Upload from './containers/upload';
+import Login from './containers/login';
+
+import { PrivateRoute } from './components/PrivateRoute';
 
 const AppRouter = () => (
   <HashRouter>
@@ -16,11 +19,12 @@ const AppRouter = () => (
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/about" component={About} />
-        <Route path="/book-list" component={BookList} />
-        <Route path="/book-detail/:id" component={BookDetail} />
-        <Route path="/topics" component={Topics} />
-        <Route path="/topic/:id" component={Topic} />
-        <Route path="/upload" component={Upload} />
+        <PrivateRoute path="/book-list" component={BookList} />
+        <PrivateRoute path="/book-detail/:id" component={BookDetail} />
+        <PrivateRoute path="/topics" component={Topics} />
+        <PrivateRoute path="/topic/:id" component={Topic} />
+        <PrivateRoute path="/upload" component={Upload} />
+        <Route path="/login" component={Login} />
       </Switch>
     </App>
   </HashRouter>

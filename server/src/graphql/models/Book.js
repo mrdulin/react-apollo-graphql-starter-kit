@@ -1,6 +1,5 @@
 const shortid = require('shortid');
 const { auth } = require('../../utils/auth');
-
 class Book {
   constructor() {}
 
@@ -11,20 +10,24 @@ class Book {
   }
 
   getById(id, ctx) {
-    return ctx.conn.lowdb
-      .get('books')
-      .find({ id })
-      .value();
+    if (auth(ctx)) {
+      return ctx.conn.lowdb
+        .get('books')
+        .find({ id })
+        .value();
+    }
   }
 
   create(book, ctx) {
-    book.id = shortid.generate();
-    book.messages = [];
-    return ctx.conn.lowdb
-      .get('books')
-      .push(book)
-      .last()
-      .write();
+    if (auth(ctx)) {
+      book.id = shortid.generate();
+      book.messages = [];
+      return ctx.conn.lowdb
+        .get('books')
+        .push(book)
+        .last()
+        .write();
+    }
   }
 }
 
