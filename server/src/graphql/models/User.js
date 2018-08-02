@@ -4,13 +4,6 @@ const { appConfig } = require('../../config');
 const shortid = require('shortid');
 
 class User {
-  isAuth(ctx) {
-    if (!ctx.user) {
-      throw new Error('authentication failed');
-    }
-    return true;
-  }
-
   async login(email, password, ctx) {
     const user = ctx.conn.lowdb
       .get(User.collectionName)
@@ -26,6 +19,7 @@ class User {
       match = await bcrypt.compare(password, user.password);
     } catch (error) {
       console.log(error);
+      throw new Error('server internal error');
     }
 
     if (!match) {

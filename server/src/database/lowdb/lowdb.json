@@ -29,7 +29,20 @@
       "filename": "vimium-options.json"
     }
   ],
-  "books": [],
+  "books": [
+    {
+      "title": "angular",
+      "author": "123",
+      "id": "qXhVXis6F",
+      "messages": []
+    },
+    {
+      "title": "angular",
+      "author": "123",
+      "id": "gswL0e_kE",
+      "messages": []
+    }
+  ],
   "user": [],
   "users": [
     {

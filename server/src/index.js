@@ -11,9 +11,9 @@ const { createWsServer } = require('./server');
 const { appConfig } = require('./config');
 const { schema } = require('./graphql/schema');
 const { CNodeConnector, MongoConnector } = require('./graphql/connectors');
-const { MongoConnect } = require('./database/mongodb');
+// const { MongoConnect } = require('./database/mongodb');
 const { lowdb } = require('./database/lowdb');
-const { authMiddleware } = require('./middlewares');
+// const { authMiddleware } = require('./middlewares');
 const { Book, Topic, User } = require('./graphql/models');
 
 const app = express();
@@ -34,7 +34,16 @@ app.use(
   })
 );
 app.use(cors());
-app.use(authMiddleware);
+// app.use(authMiddleware);
+
+app.use(
+  appConfig.GRAPHIQL_ENDPOINT,
+  graphiqlExpress({
+    endpointURL: appConfig.GRAPHQL_ENDPOINT,
+    subscriptionsEndpoint: `ws://localhost:${appConfig.PORT}${appConfig.WS_PATH}`
+  })
+);
+
 app.use(
   appConfig.GRAPHQL_ENDPOINT,
   bodyParser.json(),
@@ -43,7 +52,7 @@ app.use(
     return {
       schema,
       context: {
-        user: req.user,
+        req,
         conn: {
           cnode: new CNodeConnector({ API_ROOT_URL: appConfig.API_ROOT_URL }),
           // mongo: new MongoConnector(Mongoose),
@@ -57,12 +66,5 @@ app.use(
       },
       tracing: true
     };
-  })
-);
-app.use(
-  appConfig.GRAPHIQL_ENDPOINT,
-  graphiqlExpress({
-    endpointURL: appConfig.GRAPHQL_ENDPOINT,
-    subscriptionsEndpoint: `ws://localhost:${appConfig.PORT}${appConfig.WS_PATH}`
   })
 );

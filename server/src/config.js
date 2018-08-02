@@ -9,7 +9,7 @@ const appConfig = {
     accessToken: '426634ce-c482-43d7-a1d6-5271b180a510'
   },
   JWT_SCERET: 'what-the-fuck??',
-  JWT_EXPIRES: 60 * 1000
+  JWT_EXPIRES: '10s'
 };
 
 exports.appConfig = appConfig;
