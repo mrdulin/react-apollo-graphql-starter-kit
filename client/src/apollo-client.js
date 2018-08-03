@@ -6,6 +6,8 @@ import { WebSocketLink } from 'apollo-link-ws';
 import { createUploadLink } from 'apollo-upload-client';
 import { onError } from 'apollo-link-error';
 
+import { auth } from './services';
+
 const GRAPHQL_ENDPOINT = '/graphql';
 
 const wsClient = new SubscriptionClient('ws://localhost:3000/subscriptions', {
@@ -63,18 +65,38 @@ const isFile = value =>
 const isUpload = ({ variables }) => Object.values(variables).some(isFile);
 const terminalLink = split(isUpload, uploadLink, networkLink);
 
-const errorLink = onError(({ graphQLErrors, networkError }) => {
-  debugger;
-  if (graphQLErrors)
-    graphQLErrors.map(({ message, locations, path }) =>
-      console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`)
-    );
-  if (networkError) console.log(`[Network error]: ${networkError}`);
-});
+function createApolloClient() {
+  const client = new ApolloClient({
+    link: from([
+      authMiddleware,
+      onError(({ graphQLErrors, networkError }) => {
+        if (graphQLErrors)
+          graphQLErrors.map(error => {
+            // console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`)
+            if (error.code === 1001) {
+              auth.signout();
 
-const client = new ApolloClient({
-  cache,
-  link: from([authMiddleware, errorLink, terminalLink])
-});
+              client.cache.reset();
+              window.location.replace('#/login');
+              //client.resetStore()
+              // .then(result => {
+              //   debugger;
+              //   window.location.replace('#/login');
+              // })
+              // .catch(err => {
+              //   debugger;
+              //   console.log('reset store error: ', err);
+              // });
+            }
+          });
+        if (networkError) console.log(`[Network error]: ${networkError}`);
+      }),
+      terminalLink
+    ]),
+    cache
+  });
+  return client;
+}
+const client = createApolloClient();
 
 export { client as apolloClient };
