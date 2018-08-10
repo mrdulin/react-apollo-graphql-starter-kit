@@ -10,7 +10,6 @@ class UploadFile extends Component {
     multiple: PT.bool
   };
   onChange(e, uploadFile) {
-    console.log(e.nativeEvent, uploadFile);
     const { nativeEvent } = e;
     const {
       target: { validity, files }
@@ -33,10 +32,13 @@ class UploadFile extends Component {
         mutation={mutation}
         update={(proxy, mutationResult) => {
           const data = proxy.readQuery({ query: Q.uploads });
-          const {
-            data: { singleUpload: newUpload }
-          } = mutationResult;
-          data.uploads.push(newUpload);
+          let newUploads = [];
+          if (multiple) {
+            newUploads = mutationResult.data.multipleUpload;
+          } else {
+            newUploads = [mutationResult.data.singleUpload];
+          }
+          data.uploads = data.uploads.concat(newUploads);
           proxy.writeQuery({ query: Q.uploads, data });
         }}>
         {uploadFile => {
