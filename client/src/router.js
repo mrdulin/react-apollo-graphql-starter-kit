@@ -3,13 +3,10 @@ import { HashRouter, Route, Switch } from 'react-router-dom';
 
 import App from './containers/app';
 import Home from './containers/home';
-import About from './containers/about';
-import BookList from './containers/bookList';
-import BookDetail from './containers/bookDetail';
-import Topics from './containers/topics';
-import Topic from './containers/topic';
 import Upload from './containers/upload';
 import Login from './containers/login';
+import { BookDetail, BookList } from './containers/library';
+import { TopicDetail, TopicList } from './containers/topic';
 
 import { PrivateRoute } from './components/PrivateRoute';
 
@@ -18,11 +15,10 @@ const AppRouter = () => (
     <App>
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route path="/about" component={About} />
         <PrivateRoute path="/book-list" component={BookList} />
         <PrivateRoute path="/book-detail/:id" component={BookDetail} />
-        <PrivateRoute path="/topics" component={Topics} />
-        <PrivateRoute path="/topic/:id" component={Topic} />
+        <PrivateRoute path="/topics" component={TopicList} />
+        <PrivateRoute path="/topic/:id" component={TopicDetail} />
         <PrivateRoute path="/upload" component={Upload} />
         <Route path="/login" component={Login} />
       </Switch>

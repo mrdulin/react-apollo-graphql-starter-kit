@@ -2,8 +2,8 @@ import React from 'react';
 import { graphql } from 'react-apollo';
 import PT from 'prop-types';
 
-import * as Q from './query.gql';
-import * as M from './mutation.gql';
+import * as Q from 'gqlMod/queries';
+import * as M from 'gqlMod/mutations';
 
 class AddBook extends React.Component {
   constructor() {

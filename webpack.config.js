@@ -20,7 +20,13 @@ module.exports = {
     publicPath: '/',
     pathinfo: true
   },
-  devtool: 'cheap-module-eval-source-map',
+  resolve: {
+    alias: {
+      gqlMod: path.resolve(src, 'graphql'),
+      services: path.resolve(src, 'services')
+    }
+  },
+  devtool: 'source-map',
   module: {
     rules: [
       {

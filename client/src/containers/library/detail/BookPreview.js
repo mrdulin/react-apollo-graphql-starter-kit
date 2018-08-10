@@ -2,7 +2,7 @@ import React from 'react';
 import { graphql } from 'react-apollo';
 import PT from 'prop-types';
 
-import * as Q from './query.gql';
+import * as Q from 'gqlMod/queries';
 
 class BookPreview extends React.Component {
   render() {

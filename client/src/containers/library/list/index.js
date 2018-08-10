@@ -3,7 +3,7 @@ import { Query } from 'react-apollo';
 import PT from 'prop-types';
 
 import AddBook from './AddBook';
-import * as Q from './query.gql';
+import * as Q from 'gqlMod/queries';
 
 class BookList extends React.Component {
   onBookClick(id) {

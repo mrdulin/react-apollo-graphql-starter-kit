@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Query } from 'react-apollo';
 
-import * as M from './mutation.gql';
-import * as Q from './query.gql';
+import * as M from 'gqlMod/mutations';
+import * as Q from 'gqlMod/queries';
 import UploadFile from './components/UploadFile';
 
 class Upload extends Component {

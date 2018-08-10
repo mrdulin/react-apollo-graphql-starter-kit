@@ -1,3 +1,11 @@
+mutation addBook($book: BookInput) {
+  addBook(book: $book) {
+    id
+    title
+    author
+  }
+}
+
 mutation addMessage($message: MessageInput!) {
   addMessage(message: $message) {
     id

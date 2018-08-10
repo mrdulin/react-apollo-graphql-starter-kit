@@ -1,7 +1,0 @@
-mutation addBook($book: BookInput) {
-  addBook(book: $book) {
-    id
-    title
-    author
-  }
-}

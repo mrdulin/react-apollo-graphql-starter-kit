@@ -1,7 +1,0 @@
-query getHomeTopics($qs: TopicsInput) {
-  topics(qs: $qs) {
-    id
-    title
-    tab
-  }
-}
