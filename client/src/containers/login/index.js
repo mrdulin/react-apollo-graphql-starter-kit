@@ -3,7 +3,7 @@ import { Mutation } from 'react-apollo';
 import { Redirect } from 'react-router-dom';
 import * as PT from 'prop-types';
 
-import * as M from './mutation.gql';
+import * as M from 'gqlMod/mutations/user.gql';
 
 import { auth } from '../../services';
 
@@ -34,7 +34,6 @@ class Login extends Component {
     }
 
     mutate({ variables: { email: emailValue, password: passwordValue } }).then(({ data }) => {
-      console.log('data: ', data);
       if (data && data.login) {
         auth.authenticate(data.login, () => {
           this.setState({ redirectToReferrer: true });
@@ -55,7 +54,6 @@ class Login extends Component {
         <Mutation mutation={M.LOGIN}>
           {(login, mutationResult) => {
             let formControl = {};
-            console.log('mutationResult: ', mutationResult);
             const { loading, error } = mutationResult;
 
             if (loading) {

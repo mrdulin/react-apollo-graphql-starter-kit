@@ -2,8 +2,8 @@ import React from 'react';
 import { graphql } from 'react-apollo';
 import PT from 'prop-types';
 
-import * as Q from 'gqlMod/queries';
-import * as S from 'gqlMod/subscriptions';
+import * as Q from 'gqlMod/queries/library.gql';
+import * as S from 'gqlMod/subscriptions/library.gql';
 
 import AddMessage from './AddMessage';
 import BookPreview from './BookPreview';

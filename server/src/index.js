@@ -5,21 +5,20 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const { apolloUploadExpress } = require('apollo-upload-server');
 const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
+const path = require('path');
 
 const config = require('../../webpack.config');
 const { createWsServer } = require('./server');
 const { appConfig } = require('./config');
 const { schema } = require('./graphql/schema');
-const { CNodeConnector, MongoConnector } = require('./graphql/connectors');
-// const { MongoConnect } = require('./database/mongodb');
+const { CNodeConnector } = require('./graphql/connectors');
 const { lowdb } = require('./database/lowdb');
-// const { authMiddleware } = require('./middlewares');
-const { Book, Topic, User } = require('./graphql/models');
+const { Book, Topic, User, Upload } = require('./graphql/models');
 
 const app = express();
 const compiler = webpack(config);
 
-// const Mongoose = MongoConnect();
+const uploadDir = path.resolve(__dirname, '../../../../uploads');
 
 createWsServer({
   app,
@@ -34,7 +33,6 @@ app.use(
   })
 );
 app.use(cors());
-// app.use(authMiddleware);
 
 app.use(
   appConfig.GRAPHIQL_ENDPOINT,
@@ -55,16 +53,17 @@ app.use(
         req,
         conn: {
           cnode: new CNodeConnector({ API_ROOT_URL: appConfig.API_ROOT_URL }),
-          // mongo: new MongoConnector(Mongoose),
           lowdb
         },
         models: {
           Book: new Book(),
           Topic: new Topic(),
-          User: new User()
+          User: new User(),
+          Upload: new Upload({ uploadDir })
         }
       },
       formatError: error => {
+        console.log('formatError');
         const { code, message } = error.originalError;
         return { code, message };
       },

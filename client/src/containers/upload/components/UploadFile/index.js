@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
 import * as PT from 'prop-types';
 
-import * as Q from '../../query.gql';
+import * as Q from 'gqlMod/queries/upload.gql';
 
 class UploadFile extends Component {
   static propTypes = {
@@ -32,12 +32,12 @@ class UploadFile extends Component {
       <Mutation
         mutation={mutation}
         update={(proxy, mutationResult) => {
-          // const data = proxy.readQuery({ query: Q.uploads });
-          // const {
-          //   data: { singleUpload: newUpload }
-          // } = mutationResult;
-          // data.uploads.push(newUpload);
-          // proxy.writeQuery({ query: Q.uploads, data });
+          const data = proxy.readQuery({ query: Q.uploads });
+          const {
+            data: { singleUpload: newUpload }
+          } = mutationResult;
+          data.uploads.push(newUpload);
+          proxy.writeQuery({ query: Q.uploads, data });
         }}>
         {uploadFile => {
           return <input type="file" multiple={multiple} required onChange={e => this.onChange(e, uploadFile)} />;

@@ -2,8 +2,8 @@ import React from 'react';
 import { graphql } from 'react-apollo';
 import PT from 'prop-types';
 
-import * as Q from 'gqlMod/queries';
-import * as M from 'gqlMod/mutations';
+import * as Q from 'gqlMod/queries/library.gql';
+import * as M from 'gqlMod/mutations/library.gql';
 
 class AddMessage extends React.Component {
   constructor(props) {

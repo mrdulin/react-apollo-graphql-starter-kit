@@ -2,8 +2,8 @@ import React from 'react';
 import { graphql } from 'react-apollo';
 import PT from 'prop-types';
 
-import * as Q from 'gqlMod/queries';
-import * as M from 'gqlMod/mutations';
+import * as Q from 'gqlMod/queries/library.gql';
+import * as M from 'gqlMod/mutations/library.gql';
 
 class AddBook extends React.Component {
   constructor() {
@@ -13,7 +13,6 @@ class AddBook extends React.Component {
 
   onSubmit(evt) {
     evt.preventDefault();
-    console.log(this.input.value);
     this.props
       .mutate({
         variables: {

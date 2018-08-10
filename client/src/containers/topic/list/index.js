@@ -2,7 +2,7 @@ import React from 'react';
 import { Query } from 'react-apollo';
 import PT from 'prop-types';
 
-import * as Q from 'gqlMod/queries';
+import * as Q from 'gqlMod/queries/topic.gql';
 
 class Topics extends React.Component {
   static propTypes = {
