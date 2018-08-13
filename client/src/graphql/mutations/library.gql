@@ -18,5 +18,6 @@ mutation ADD_TO_CART($book: BookInput) {
     id
     title
     author
+    count
   }
 }

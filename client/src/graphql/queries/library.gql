@@ -14,6 +14,7 @@ query BOOK_BY_ID($id: ID!) {
     id
     title
     author
+    count @client
   }
 }
 
@@ -26,4 +27,8 @@ query CART {
       count
     }
   }
+}
+
+query BOOK_COUNT_BY_ID($id: ID!) {
+  bookCountById(id: $id) @client
 }

@@ -1,4 +1,5 @@
 const typeDefs = `
+
   type Book {
     id: ID!
     title: string!
@@ -21,7 +22,7 @@ const typeDefs = `
   }
 
   type Query {
-    cart: Cart
+    cart: Cart!
   }
 `;
 export { typeDefs };
