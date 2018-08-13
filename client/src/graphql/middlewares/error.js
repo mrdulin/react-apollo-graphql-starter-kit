@@ -10,8 +10,8 @@ function createErrorLink(apolloClient) {
         if (error.code === 1001) {
           auth.signout();
 
-          apolloClient.cache.reset();
-          window.location.replace('#/login');
+          // apolloClient.cache.reset();
+          // window.location.replace('#/login');
           //apolloClient.resetStore()
           // .then(result => {
           //   debugger;

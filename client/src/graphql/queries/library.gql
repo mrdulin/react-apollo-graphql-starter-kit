@@ -1,4 +1,4 @@
-query getBooks {
+query BOOKS {
   books {
     id
     title

@@ -6,6 +6,8 @@ class Auth {
   constructor() {
     if (Auth.instance) return Auth.instance;
     Auth.instance = this;
+    const token = localStorage.getItem('jwt');
+    this.authenticate(token);
   }
 
   authenticate(token, cb) {
