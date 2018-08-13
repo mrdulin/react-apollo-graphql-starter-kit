@@ -22,6 +22,11 @@ class Auth {
     this.isAuthenticated = false;
     localStorage.removeItem('jwt');
   }
+
+  getJwt() {
+    const jwt = localStorage.getItem('jwt') || '';
+    return jwt;
+  }
 }
 
 const auth = new Auth();
@@ -29,4 +34,4 @@ const auth2 = new Auth();
 
 console.log(auth === auth2);
 
-export { auth };
+export { auth, Auth };

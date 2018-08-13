@@ -12,3 +12,11 @@ mutation addMessage($message: MessageInput!) {
     text
   }
 }
+
+mutation ADD_TO_CART($book: BookInput) {
+  addToCart(book: $book) @client {
+    id
+    title
+    author
+  }
+}

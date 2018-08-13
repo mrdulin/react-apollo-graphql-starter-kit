@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import * as PT from '../../propTypes';
-
 class BookList extends Component {
   render() {
     const { datas, onClick } = this.props;
@@ -10,7 +9,7 @@ class BookList extends Component {
         <ul>
           {datas.map(data => {
             return (
-              <li key={data.id} onClick={data => onClick(data)}>
+              <li key={data.id} onClick={() => onClick(data)}>
                 {data.title}
               </li>
             );

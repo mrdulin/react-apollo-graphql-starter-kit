@@ -8,7 +8,7 @@ import Login from './containers/login';
 import { BookDetail, BookList } from './containers/library';
 import { TopicDetail, TopicList } from './containers/topic';
 
-import { PrivateRoute } from './components/PrivateRoute';
+import { PrivateRoute } from './shared/components/PrivateRoute';
 
 const AppRouter = () => (
   <HashRouter>

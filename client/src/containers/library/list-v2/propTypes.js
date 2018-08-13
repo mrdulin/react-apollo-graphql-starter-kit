@@ -1,19 +1,17 @@
 import * as PT from 'prop-types';
 
-const books = PT.arrayOf(
-  PT.shape({ id: PT.string.isRequired, title: PT.string.isRequired, author: PT.string.isRequired })
-);
+const book = PT.shape({ id: PT.string.isRequired, title: PT.string.isRequired, author: PT.string.isRequired });
+const books = PT.arrayOf(book);
 
 const onBookClick = PT.func;
-
-const history = PT.object;
 
 const mutation = {
   addBook: PT.func
 };
 
 const query = {
-  data: PT.shape({ loading: PT.bool.isRequired, error: PT.string, books })
+  data: PT.shape({ loading: PT.bool.isRequired, error: PT.object, books })
 };
 
-export { books, query, onBookClick, history, mutation };
+export { books, query, onBookClick, mutation };
+export * from '../../../shared/propTypes';

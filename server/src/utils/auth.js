@@ -3,8 +3,12 @@ const { appConfig } = require('../config');
 const { AppError } = require('./error');
 
 function auth(context) {
+  const { authorization } = context.req.headers;
+  if (!authorization) {
+    throw new AppError({ msg: 'authorization failed', code: 1001 });
+  }
   let token;
-  const parts = context.req.headers.authorization.split(' ');
+  const parts = authorization.split(' ');
 
   if (parts.length === 2) {
     const schema = parts[0];
