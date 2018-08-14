@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { graphql, compose } from 'react-apollo';
+import { Link } from 'react-router-dom';
 
 import * as Q from 'gqlMod/queries/library.gql';
 import * as M from 'gqlMod/mutations/library.gql';
@@ -31,6 +32,7 @@ class BookDetail extends Component {
                 Add To Cart
               </button>
               {book.count ? <span>count: {book.count}</span> : null}
+              <Link to="/cart">Go To Cart</Link>
             </div>
 
             <div>

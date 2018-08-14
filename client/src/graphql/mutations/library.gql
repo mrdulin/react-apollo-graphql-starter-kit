@@ -21,3 +21,11 @@ mutation ADD_TO_CART($book: BookInput) {
     count
   }
 }
+
+mutation REMOVE_FROM_CART($book: BookInput) {
+  removeFromCart(book: $book) @client
+}
+
+mutation REMOVE_COUNT_FROM_CART($book: BookInput) {
+  removeCountFromCart(book: $book) @client
+}
