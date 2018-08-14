@@ -28,7 +28,3 @@ query CART {
     }
   }
 }
-
-query BOOK_COUNT_BY_ID($id: ID!) {
-  bookCountById(id: $id) @client
-}

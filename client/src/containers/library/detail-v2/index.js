@@ -16,8 +16,6 @@ class BookDetail extends Component {
       data: { loading, error, bookById: book }
     } = this.props;
 
-    debugger;
-
     return (
       <div>
         <h2>Book Detail</h2>
@@ -32,7 +30,7 @@ class BookDetail extends Component {
               <button onClick={() => this.onAddToCartButtonClick()} type="button">
                 Add To Cart
               </button>
-              <span>count: {book.count}</span>
+              {book.count ? <span>count: {book.count}</span> : null}
             </div>
 
             <div>
@@ -57,9 +55,6 @@ BookDetail.propTypes = {
 
 export default compose(
   graphql(Q.BOOK_BY_ID, {
-    props: ({ data }) => {
-      return { data };
-    },
     options: props => {
       return {
         variables: {
@@ -68,14 +63,6 @@ export default compose(
       };
     }
   }),
-  // graphql(Q.BOOK_COUNT_BY_ID, {
-  //   props: ({ data: { book } }) => {
-  //     debugger;
-  //     return {
-  //       cart
-  //     };
-  //   }
-  // }),
   graphql(M.ADD_TO_CART, {
     options: props => {
       return {

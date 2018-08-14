@@ -6,12 +6,12 @@ mutation ADD_BOOK($book: BookInput) {
   }
 }
 
-mutation addMessage($message: MessageInput!) {
-  addMessage(message: $message) {
-    id
-    text
-  }
-}
+# mutation ADD_COMMENT($message: MessageInput!) {
+#   addMessage(message: $message) {
+#     id
+#     text
+#   }
+# }
 
 mutation ADD_TO_CART($book: BookInput) {
   addToCart(book: $book) @client {
