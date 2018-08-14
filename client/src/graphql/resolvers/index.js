@@ -1,4 +1,5 @@
 import * as Q from '../queries/library.gql';
+import { defaults } from '../state';
 
 const findBookById = (books, id) => books.find(book => book.id === id);
 
@@ -6,7 +7,12 @@ const resolvers = {
   Book: {
     count: () => 0
   },
-  Query: {},
+  Query: {
+    editComment: (_, args, { cache }) => {
+      const data = cache.readQuery({ query: Q.EDIT_COMMENT });
+      debugger;
+    }
+  },
   Mutation: {
     addToCart: (_, { book }, { cache }) => {
       const query = Q.CART;
@@ -27,11 +33,13 @@ const resolvers = {
       const data = {
         cart: {
           ...prevState.cart,
-          books: prevBook ? [nextBook] : prevState.cart.books.concat([nextBook])
+          books: prevBook
+            ? prevState.cart.books.map(cacheBook => (cacheBook.id === book.id ? nextBook : cacheBook))
+            : prevState.cart.books.concat([nextBook])
         }
       };
 
-      cache.writeData({ query, data });
+      cache.writeQuery({ query, data });
       return nextBook;
     },
 
@@ -52,7 +60,7 @@ const resolvers = {
         }
       };
 
-      cache.writeData({ query, data });
+      cache.writeQuery({ query, data });
       return null;
     },
 
@@ -68,7 +76,18 @@ const resolvers = {
         }
       };
 
-      cache.writeData({ query, data });
+      cache.writeQuery({ query, data });
+      return null;
+    },
+
+    removeAllFromCart: (_, args, { cache }) => {
+      cache.writeData({ data: defaults });
+      return null;
+    },
+
+    editComment: (_, { text }, { cache }) => {
+      const data = { bookDetail: { comment: text, __typename: 'BookDetail' } };
+      cache.writeData({ data });
       return null;
     }
   }

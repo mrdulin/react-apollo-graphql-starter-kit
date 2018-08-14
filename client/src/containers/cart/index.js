@@ -19,6 +19,10 @@ class Cart extends Component {
     this.props.removeFromCart({ variables: { book } });
   }
 
+  removeAll() {
+    this.props.removeAllFromCart();
+  }
+
   render() {
     const { cart } = this.props;
 
@@ -26,26 +30,33 @@ class Cart extends Component {
       <div>
         <h2>Cart</h2>
         {cart.books.length ? (
-          <ul>
-            {cart.books.map(book => {
-              return (
-                <li key={book.id}>
-                  <span>{book.title}</span>
-                  <button type="button" onClick={() => this.minus(book)}>
-                    -
-                  </button>
-                  <span>count: {book.count}</span>
-                  <button type="button" onClick={() => this.plus(book)}>
-                    +
-                  </button>
+          <div>
+            <ul>
+              {cart.books.map(book => {
+                return (
+                  <li key={book.id}>
+                    <span>{book.title}</span>
+                    <button type="button" onClick={() => this.minus(book)} disabled={book.count === 1}>
+                      -
+                    </button>
+                    <span>count: {book.count}</span>
+                    <button type="button" onClick={() => this.plus(book)} disabled={book.count === 5}>
+                      +
+                    </button>
 
-                  <button type="button" onClick={() => this.remove(book)}>
-                    remove
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
+                    <button type="button" onClick={() => this.remove(book)}>
+                      remove
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+            <div>
+              <button type="button" onClick={() => this.removeAll()}>
+                Remove All
+              </button>
+            </div>
+          </div>
         ) : (
           <p>Cart is empty</p>
         )}
@@ -67,7 +78,8 @@ Cart.propTypes = {
   }),
   addToCart: PT.func,
   removeFromCart: PT.func,
-  removeCountFromCart: PT.func
+  removeCountFromCart: PT.func,
+  removeAllFromCart: PT.func
 };
 
 export default compose(
@@ -78,6 +90,7 @@ export default compose(
       };
     }
   }),
+  graphql(M.REMOVE_ALL_FROM_COUNT, { name: 'removeAllFromCart' }),
   graphql(M.ADD_TO_CART, { name: 'addToCart' }),
   graphql(M.REMOVE_FROM_CART, { name: 'removeFromCart' }),
   graphql(M.REMOVE_COUNT_FROM_CART, { name: 'removeCountFromCart' })

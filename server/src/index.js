@@ -12,8 +12,8 @@ const { createWsServer } = require('./server');
 const { appConfig } = require('./config');
 const { schema } = require('./graphql/schema');
 const { CNodeConnector } = require('./graphql/connectors');
-const { lowdb } = require('./database/lowdb');
-const { Book, Topic, User, Upload } = require('./graphql/models');
+const { lowdb, collections } = require('./database/lowdb');
+const { Book, Topic, User, Upload, Comment } = require('./graphql/models');
 
 const app = express();
 const compiler = webpack(config);
@@ -56,7 +56,8 @@ app.use(
           lowdb
         },
         models: {
-          Book: new Book(),
+          Book: new Book({ collectionName: collections.books.name }),
+          Comment: new Comment({ collectionName: collections.comments.name }),
           Topic: new Topic(),
           User: new User(),
           Upload: new Upload({ uploadDir })

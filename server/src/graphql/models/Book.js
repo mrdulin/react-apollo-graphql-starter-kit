@@ -1,18 +1,24 @@
 const shortid = require('shortid');
 const { auth } = require('../../utils/auth');
 class Book {
-  constructor() {}
+  constructor(opts) {
+    this.collectionName = opts.collectionName;
+  }
 
-  getAll(ctx) {
-    if (auth(ctx)) {
-      return ctx.conn.lowdb.get('books').value();
-    }
+  getAll({ models, conn }) {
+    return conn.lowdb
+      .get(this.collectionName)
+      .value()
+      .map(book => {
+        book.comments = models.Comment.getByBookId({ id: book.id, pageSize: 10, page: 0 }, conn);
+        return book;
+      });
   }
 
   getById(id, ctx) {
     if (auth(ctx)) {
       return ctx.conn.lowdb
-        .get('books')
+        .get(this.collectionName)
         .find({ id })
         .value();
     }
@@ -23,7 +29,7 @@ class Book {
       book.id = shortid.generate();
       book.messages = [];
       return ctx.conn.lowdb
-        .get('books')
+        .get(this.collectionName)
         .push(book)
         .last()
         .write();

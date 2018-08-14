@@ -3,7 +3,13 @@ const { appConfig } = require('../config');
 const { AppError } = require('./error');
 
 function auth(context) {
-  const { authorization } = context.req.headers;
+  let req;
+  if (context.headers) {
+    req = context;
+  } else {
+    req = context.req;
+  }
+  const { authorization } = req.headers;
   if (!authorization) {
     throw new AppError({ msg: 'authorization failed', code: 1001 });
   }

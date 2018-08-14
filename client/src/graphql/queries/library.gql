@@ -1,8 +1,6 @@
 query BOOKS {
   books {
-    id
-    title
-    author
+    ...BookFragment
   }
 }
 
@@ -11,9 +9,11 @@ query BOOKS {
 
 query BOOK_BY_ID($id: ID!) {
   bookById(id: $id) {
-    id
-    title
-    author
+    ...BookFragment
+    comments {
+      id
+      text
+    }
     count @client
   }
 }
@@ -21,10 +21,18 @@ query BOOK_BY_ID($id: ID!) {
 query CART {
   cart @client {
     books {
-      id
-      title
-      author
+      ...BookFragment
       count
     }
   }
+}
+
+query EDIT_COMMENT {
+  editComment @client
+}
+
+fragment BookFragment on Book {
+  id
+  title
+  author
 }

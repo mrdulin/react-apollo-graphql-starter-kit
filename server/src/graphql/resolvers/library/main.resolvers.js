@@ -1,43 +1,33 @@
 const { PubSub, withFilter } = require('graphql-subscriptions');
+const { auth } = require('../../../utils/auth');
 
 const pubsub = new PubSub();
 
 module.exports = {
   Query: {
-    books: (root, args, ctx) => {
-      return ctx.models.Book.getAll(ctx);
+    books: (_, args, { models, conn, req }) => {
+      if (auth(req)) {
+        return models.Book.getAll({ models, conn });
+      }
     },
-    bookById: (root, { id }, ctx) => {
+    bookById: (_, { id }, ctx) => {
       return ctx.models.Book.getById(id, ctx);
     }
   },
   Mutation: {
-    addBook: (root, { book }, ctx) => {
+    addBook: (_, { book }, ctx) => {
       return ctx.models.Book.create(book, ctx);
     },
-    addMessage: (root, { message }, context) => {
-      //   const book = context.lowdb
-      //     .get('books')
-      //     .find({ id: message.bookId })
-      //     .value();
-      //   if (!book) throw new Error('book does not exist');
-      //   const messageId = shortid.generate();
-      //   const newMessage = { id: messageId, text: message.text };
-      //   pubsub.publish('messageAdded', { messageAdded: newMessage, bookId: message.bookId });
-      //   return context.lowdb
-      //     .get('books')
-      //     .find({ id: message.bookId })
-      //     .get('messages')
-      //     .push(newMessage)
-      //     .last()
-      //     .write();
-      // }
+    addComment: (_, { comment }, { models, conn, req }) => {
+      if (auth(req)) {
+        return models.Comment.create(comment, models, conn);
+      }
     }
   },
   Subscription: {
-    messageAdded: {
+    addComment: {
       subscribe: withFilter(
-        () => pubsub.asyncIterator('messageAdded'),
+        () => pubsub.asyncIterator(['addComment']),
         (payload, variables) => {
           return payload.bookId === variables.bookId;
         }

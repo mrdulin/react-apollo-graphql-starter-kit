@@ -5,13 +5,7 @@ import { typeDefs } from '../typeDefs';
 import { resolvers } from '../resolvers';
 
 import { cache } from '../cache';
-
-const defaults = {
-  cart: {
-    books: [],
-    __typename: 'Cart'
-  }
-};
+import { defaults } from '../state';
 
 const stateLink = withClientState({ cache, typeDefs, resolvers, defaults });
 

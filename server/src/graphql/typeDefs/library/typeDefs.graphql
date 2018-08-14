@@ -1,8 +1,8 @@
 type Book {
   id: ID!
-  title: String
-  author: String
-  messages: [Message]
+  title: String!
+  author: String!
+  comments: [Comment]!
 }
 
 input BookInput {
@@ -10,26 +10,26 @@ input BookInput {
   author: String!
 }
 
-type Message {
+type Comment {
   id: ID!
-  text: String
+  text: String!
 }
 
-input MessageInput {
+input CommentInput {
   bookId: ID!
-  text: String
+  text: String!
 }
 
 type Query {
-  books: [Book!]!
+  books: [Book]!
   bookById(id: ID!): Book
 }
 
 type Mutation {
-  addBook(book: BookInput): Book
-  addMessage(message: MessageInput!): Message
+  addBook(book: BookInput!): Book
+  addComment(comment: CommentInput!): Comment
 }
 
 type Subscription {
-  messageAdded(bookId: ID!): Message
+  addComment(bookId: ID!): Comment
 }
