@@ -65,8 +65,12 @@ app.use(
       },
       formatError: error => {
         console.log('formatError');
-        const { code, message } = error.originalError;
-        return { code, message };
+        if (error.originalError) {
+          const { code, message } = error.originalError;
+          return { code, message };
+        }
+
+        return error;
       },
       tracing: true
     };

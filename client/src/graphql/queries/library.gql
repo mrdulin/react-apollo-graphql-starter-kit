@@ -18,6 +18,13 @@ query BOOK_BY_ID($id: ID!) {
   }
 }
 
+query COMMENT_BY_PAGE($id: ID!, $offset: Int, $limit: Int, $skip: Boolean!) {
+  commentsByPage(id: $id, offset: $offset, limit: $limit) @skip(if: $skip) {
+    id
+    text
+  }
+}
+
 query CART {
   cart @client {
     books {
@@ -27,8 +34,10 @@ query CART {
   }
 }
 
-query EDIT_COMMENT {
-  editComment @client
+query BOOK_DETAIL {
+  bookDetail @client {
+    comment
+  }
 }
 
 fragment BookFragment on Book {

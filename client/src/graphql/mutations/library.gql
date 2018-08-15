@@ -39,3 +39,7 @@ mutation EDIT_COMMENT($text: String!) {
     text
   }
 }
+
+# mutation ADD_MORE_COMMENTS_TO_BOOK($id: id, $comments: [Comment]!) {
+#   addMoreCommentsToBook(id: $id, comments: $comments) @client
+# }

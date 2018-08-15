@@ -23,6 +23,7 @@ input CommentInput {
 type Query {
   books: [Book]!
   bookById(id: ID!): Book
+  commentsByPage(id: ID!, offset: Int, limit: Int): [Comment]!
 }
 
 type Mutation {

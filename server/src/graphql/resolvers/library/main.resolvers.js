@@ -12,6 +12,11 @@ module.exports = {
     },
     bookById: (_, { id }, ctx) => {
       return ctx.models.Book.getById(id, ctx);
+    },
+    commentsByPage: (_, { id, offset, limit }, { models, conn, req }) => {
+      if (auth(req)) {
+        return models.Comment.getByPage({ id, offset, limit }, { conn });
+      }
     }
   },
   Mutation: {

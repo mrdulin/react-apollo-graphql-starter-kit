@@ -13,11 +13,20 @@ class Comment {
       .write();
   }
 
-  getByBookId({ id, pageSize = 10 }, conn) {
+  getByBookId({ id, limit = 10 }, conn) {
     return conn.lowdb
       .get(this.collectionName)
       .filter({ bookId: id })
-      .take(pageSize)
+      .take(limit)
+      .value();
+  }
+
+  getByPage({ id, offset, limit = 10 }, { conn }) {
+    return conn.lowdb
+      .get(this.collectionName)
+      .filter({ bookId: id })
+      .drop(offset * limit)
+      .take(limit)
       .value();
   }
 }

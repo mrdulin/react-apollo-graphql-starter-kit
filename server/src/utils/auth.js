@@ -23,7 +23,7 @@ function auth(context) {
     if (/^Bearer$/i.test(schema)) {
       token = credentials;
     } else {
-      throw new Error('credentials_bad_scheme: Format is Authorization: Bearer [token]');
+      throw new AppError({ msg: 'credentials_bad_scheme: Format is Authorization: Bearer [token]', code: 1002 });
     }
   }
 

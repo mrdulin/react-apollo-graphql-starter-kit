@@ -7,12 +7,7 @@ const resolvers = {
   Book: {
     count: () => 0
   },
-  Query: {
-    editComment: (_, args, { cache }) => {
-      const data = cache.readQuery({ query: Q.EDIT_COMMENT });
-      debugger;
-    }
-  },
+  Query: {},
   Mutation: {
     addToCart: (_, { book }, { cache }) => {
       const query = Q.CART;
@@ -90,6 +85,12 @@ const resolvers = {
       cache.writeData({ data });
       return null;
     }
+
+    // addMoreCommentsToBook: (_, { id, comments }, { cache }) => {
+    //   const data = cache.readQuery({ query: Q.BOOK_BY_ID });
+    //   debugger;
+    //   return null;
+    // }
   }
 };
 
