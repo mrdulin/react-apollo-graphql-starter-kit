@@ -12,3 +12,5 @@ https://dev-blog.apollodata.com/full-stack-react-graphql-tutorial-582ac8d24e3b
 https://docs.scaphold.io/tutorials/authentication-in-graphql/
 
 https://www.apollographql.com/docs/react/api/react-apollo.html
+
+https://blog.apollographql.com/authorization-in-graphql-452b1c402a9

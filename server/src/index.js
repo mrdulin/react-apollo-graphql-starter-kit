@@ -14,6 +14,7 @@ const { schema } = require('./graphql/schema');
 const { CNodeConnector } = require('./graphql/connectors');
 const { lowdb, collections } = require('./database/lowdb');
 const { Book, Topic, User, Upload, Comment } = require('./graphql/models');
+const { bypassAuth } = require('./utils/auth');
 
 const app = express();
 const compiler = webpack(config);
@@ -47,20 +48,22 @@ app.use(
   bodyParser.json(),
   apolloUploadExpress(),
   graphqlExpress(req => {
+    const user = bypassAuth(req);
     return {
       schema,
       context: {
+        user,
         req,
         conn: {
           cnode: new CNodeConnector({ API_ROOT_URL: appConfig.API_ROOT_URL }),
           lowdb
         },
         models: {
-          Book: new Book({ collectionName: collections.books.name }),
-          Comment: new Comment({ collectionName: collections.comments.name }),
+          Book: new Book({ collectionName: collections.books.name, user }),
+          Comment: new Comment({ collectionName: collections.comments.name, user }),
           Topic: new Topic(),
-          User: new User(),
-          Upload: new Upload({ uploadDir })
+          User: new User({ collectionName: collections.users.name }),
+          Upload: new Upload({ uploadDir, user })
         }
       },
       formatError: error => {

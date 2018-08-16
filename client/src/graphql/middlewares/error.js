@@ -2,28 +2,24 @@ import { onError } from 'apollo-link-error';
 
 import { auth } from '../../services';
 
-function createErrorLink(apolloClient) {
-  function errorHandler({ graphQLErrors, networkError }) {
-    if (graphQLErrors)
+function createErrorLink() {
+  function errorHandler({ graphQLErrors, networkError, response, operation, forward }) {
+    if (graphQLErrors) {
       graphQLErrors.map(error => {
-        // console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`)
         if (error.code === 1001) {
           auth.signout();
-
-          // apolloClient.cache.reset();
-          // window.location.replace('#/login');
-          //apolloClient.resetStore()
-          // .then(result => {
-          //   debugger;
-          //   window.location.replace('#/login');
-          // })
-          // .catch(err => {
-          //   debugger;
-          //   console.log('reset store error: ', err);
-          // });
+          //https://github.com/apollographql/apollo-link/pull/144
+          response.errors = null;
         }
       });
-    if (networkError) console.log(`[Network error]: ${networkError}`);
+    }
+
+    if (networkError) {
+      if (networkError.statusCode === 401) {
+        auth.signout();
+        response.errors = null;
+      }
+    }
   }
 
   return onError(errorHandler);

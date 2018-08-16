@@ -1,7 +1,7 @@
 class Auth {
   static instance;
 
-  isAuthenticated = false;
+  user;
 
   constructor() {
     if (Auth.instance) return Auth.instance;
@@ -10,17 +10,18 @@ class Auth {
     this.authenticate(token);
   }
 
-  authenticate(token, cb) {
-    if (token) {
-      this.isAuthenticated = true;
-      localStorage.setItem('jwt', token);
+  authenticate(user, cb) {
+    if (user) {
+      this.user = user;
+      localStorage.setItem('jwt', user.token);
       cb && cb();
     }
   }
 
   signout() {
-    this.isAuthenticated = false;
+    this.user = undefined;
     localStorage.removeItem('jwt');
+    window.location.replace('#/login');
   }
 
   getJwt() {

@@ -2,7 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PT from 'prop-types';
 
+import { auth } from '../../services/auth';
+
 class App extends React.Component {
+  onLogout() {
+    auth.signout();
+    window.location.replace('#/login');
+  }
+
   render() {
     return (
       <div>
@@ -20,6 +27,17 @@ class App extends React.Component {
             <Link to="/upload">Upload</Link>
           </li>
         </ul>
+
+        {auth.user ? (
+          <div>
+            <p>Username: {auth.user.name}</p>
+            <p>Email: {auth.user.email}</p>
+            <button type="button" onClick={() => this.onLogout()}>
+              logout
+            </button>
+          </div>
+        ) : null}
+
         <hr />
         {this.props.children}
       </div>
@@ -28,7 +46,8 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  children: PT.node
+  children: PT.node,
+  history: PT.object
 };
 
 export default App;
