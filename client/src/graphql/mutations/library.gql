@@ -1,4 +1,4 @@
-mutation ADD_BOOK($book: BookInput) {
+mutation ADD_BOOK($book: BookInput!) {
   addBook(book: $book) {
     id
     title

@@ -4,9 +4,9 @@ const { SubscriptionServer } = require('subscriptions-transport-ws');
 
 function createWsServer(options) {
   const { app, port, schema, wsPath } = options;
-  const ws = createServer(app);
+  const httpServer = createServer(app);
 
-  return ws.listen(port, () => {
+  return httpServer.listen(port, () => {
     console.log(`subscriptions transport ws listening on port ${port}!\n`);
     new SubscriptionServer(
       {
@@ -32,7 +32,7 @@ function createWsServer(options) {
         }
       },
       {
-        server: ws,
+        server: httpServer,
         path: wsPath
       }
     );
