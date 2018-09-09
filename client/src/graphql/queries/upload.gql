@@ -1,6 +1,0 @@
-query uploads {
-  uploads {
-    id
-    filename
-  }
-}

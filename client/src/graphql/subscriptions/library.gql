@@ -1,6 +1,0 @@
-subscription messageAdded($bookId: ID!) {
-  messageAdded(bookId: $bookId) {
-    id
-    text
-  }
-}
