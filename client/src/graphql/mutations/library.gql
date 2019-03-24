@@ -1,0 +1,45 @@
+mutation ADD_BOOK($book: BookInput!) {
+  addBook(book: $book) {
+    id
+    title
+    author
+  }
+}
+
+mutation ADD_COMMENT($comment: CommentInput!) {
+  addComment(comment: $comment) {
+    id
+    text
+  }
+}
+
+mutation ADD_TO_CART($book: BookInput) {
+  addToCart(book: $book) @client {
+    id
+    title
+    author
+    count
+  }
+}
+
+mutation REMOVE_FROM_CART($book: BookInput) {
+  removeFromCart(book: $book) @client
+}
+
+mutation REMOVE_COUNT_FROM_CART($book: BookInput) {
+  removeCountFromCart(book: $book) @client
+}
+
+mutation REMOVE_ALL_FROM_COUNT {
+  removeAllFromCart @client
+}
+
+mutation EDIT_COMMENT($text: String!) {
+  editComment(text: $text) @client {
+    text
+  }
+}
+
+# mutation ADD_MORE_COMMENTS_TO_BOOK($id: id, $comments: [Comment]!) {
+#   addMoreCommentsToBook(id: $id, comments: $comments) @client
+# }

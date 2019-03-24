@@ -1,0 +1,27 @@
+query getTopicById($id: ID!) {
+  topic(id: $id) {
+    id
+    title
+    content
+    create_at
+    visit_count
+    tab
+    author {
+      id
+      loginname
+      avatar_url
+    }
+    replies {
+      id
+      content
+    }
+  }
+}
+
+query getHomeTopics($qs: TopicsInput) {
+  topics(qs: $qs) {
+    id
+    title
+    tab
+  }
+}

@@ -1,0 +1,24 @@
+interface User {
+  id: ID!
+  name: String
+  email: String!
+}
+
+type UserProfile implements User {
+  id: ID!
+  name: String
+  email: String!
+  createdAt: String
+}
+
+type UserAuth implements User {
+  id: ID!
+  name: String
+  email: String!
+  token: String
+}
+
+type Mutation {
+  login(email: String!, password: String!): UserAuth
+  register(name: String, email: String!, password: String!): UserAuth
+}
