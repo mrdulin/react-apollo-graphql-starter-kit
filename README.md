@@ -1,5 +1,7 @@
 # react-apollo-graphql-fullstack
 
+Learning react-apollo and GraphQL with Full-stack
+
 ## references
 
 - https://dev-blog.apollodata.com/full-stack-react-graphql-tutorial-582ac8d24e3b
