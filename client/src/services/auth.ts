@@ -8,14 +8,14 @@ class Auth {
       return Auth.instance;
     }
     Auth.instance = this;
-    const token = localStorage.getItem('jwt');
+    const token = localStorage.getItem("jwt");
     this.authenticate(token);
   }
 
   public authenticate(user: any, cb?: () => void) {
     if (user) {
       this.user = user;
-      localStorage.setItem('jwt', user.token);
+      localStorage.setItem("jwt", user.token);
       if (cb) {
         cb();
       }
@@ -24,12 +24,12 @@ class Auth {
 
   public signout() {
     this.user = undefined;
-    localStorage.removeItem('jwt');
-    window.location.replace('#/login');
+    localStorage.removeItem("jwt");
+    window.location.replace("#/login");
   }
 
   public getJwt() {
-    const jwt = localStorage.getItem('jwt') || '';
+    const jwt = localStorage.getItem("jwt") || "";
     return jwt;
   }
 }

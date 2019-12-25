@@ -1,11 +1,11 @@
 const defaults = {
   cart: {
     books: [],
-    __typename: 'Cart'
+    __typename: "Cart"
   },
   bookDetail: {
-    comment: '',
-    __typename: 'BookDetail'
+    comment: "",
+    __typename: "BookDetail"
   }
 };
 

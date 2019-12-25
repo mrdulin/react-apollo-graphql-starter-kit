@@ -1,12 +1,12 @@
-import React, { PureComponent, ReactNode } from 'react';
-import { compose, withApollo, MutationFunc } from 'react-apollo';
-import { ApolloQueryResult } from 'apollo-client';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import propTypes from 'prop-types';
+import React, { PureComponent, ReactNode } from "react";
+import { compose, withApollo, MutationFunc } from "react-apollo";
+import { ApolloQueryResult } from "apollo-client";
+import { Link, RouteComponentProps } from "react-router-dom";
+import propTypes from "prop-types";
 
-import * as PT from './propTypes';
-import * as Q from './query';
-import * as M from './mutation';
+import * as PT from "./propTypes";
+import * as Q from "./query";
+import * as M from "./mutation";
 
 interface IBookDetailProps {
   bookDetail: any;
@@ -36,7 +36,9 @@ interface IParams {
 }
 
 type State = Readonly<IBookDetailState>;
-type Props = Readonly<RouteComponentProps<IParams> & IBookDetailProps & IBookDetailMutations>;
+type Props = Readonly<
+  RouteComponentProps<IParams> & IBookDetailProps & IBookDetailMutations
+>;
 
 class BookDetail extends PureComponent<Props, State> {
   public static propTypes = {
@@ -63,12 +65,12 @@ class BookDetail extends PureComponent<Props, State> {
     this.onTextAreaChange = this.onTextAreaChange.bind(this);
 
     this.state = {
-      comment: ''
+      comment: ""
     };
   }
 
   public componentWillMount() {
-    console.log('componentWillMount', this.props);
+    console.log("componentWillMount", this.props);
     this.setState({ comment: this.props.bookDetail.comment });
   }
 
@@ -92,7 +94,10 @@ class BookDetail extends PureComponent<Props, State> {
             <p>title: {book.title}</p>
             <p>author: {book.author}</p>
             <div>
-              <button onClick={() => this.onAddToCartButtonClick()} type="button">
+              <button
+                onClick={() => this.onAddToCartButtonClick()}
+                type="button"
+              >
                 Add To Cart
               </button>
               {book.count ? <span>count: {book.count}</span> : null}
@@ -155,7 +160,12 @@ class BookDetail extends PureComponent<Props, State> {
   private onLoadMore() {
     const { offset, limit } = this.pagination;
     const nextOffset = offset + 1;
-    this.props.onLoadMore({ id: this.props.match.params.id, offset: nextOffset, limit, skip: false });
+    this.props.onLoadMore({
+      id: this.props.match.params.id,
+      offset: nextOffset,
+      limit,
+      skip: false
+    });
   }
 
   private onAddToCartButtonClick() {
@@ -168,10 +178,14 @@ class BookDetail extends PureComponent<Props, State> {
     const $comment = (form.elements as any).comment;
     const text = $comment.value.trim();
 
-    this.props.addComment({ variables: { comment: { bookId: this.props.match.params.id, text } } }).then(res => {
-      console.log('addComment res: ', res);
-      this.setState({ comment: '' });
-    });
+    this.props
+      .addComment({
+        variables: { comment: { bookId: this.props.match.params.id, text } }
+      })
+      .then(res => {
+        console.log("addComment res: ", res);
+        this.setState({ comment: "" });
+      });
   }
 }
 

@@ -1,12 +1,12 @@
 const config = {
-  HOST: 'localhost',
+  HOST: "localhost",
   PORT: 3200,
 
-  GRAPHQL_ROUTE: '/graphql',
-  GRAPHQL_ENDPOINT: '',
+  GRAPHQL_ROUTE: "/graphql",
+  GRAPHQL_ENDPOINT: "",
 
-  GRAPHQL_SUBSCRIPTION_ROUTE: '/subscriptions',
-  GRAPHQL_SUBSCRIPTION_ENDPOINT: ''
+  GRAPHQL_SUBSCRIPTION_ROUTE: "/subscriptions",
+  GRAPHQL_SUBSCRIPTION_ENDPOINT: ""
 };
 
 config.GRAPHQL_ENDPOINT = `http://${config.HOST}:${config.PORT}${config.GRAPHQL_ROUTE}`;
