@@ -1,26 +1,25 @@
 {
-  "name": "react-apollo-graphql-client",
+  "name": "react-apollo-graphql-starter-kit",
   "version": "1.0.0",
-  "description": "React.js apollo GraphQL Client",
-  "main": "index.js",
+  "description": "Learning react-apollo and GraphQL",
+  "main": "./dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prestart": "npm run build && npm version patch",
+    "test": "jest",
     "start": "webpack-dev-server --open --progress --mode=development",
     "build:dev": "webpack --mode=development",
     "build": "webpack"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mrdulin/react-apollo-graphql-client.git"
+    "url": "git+https://github.com/mrdulin/react-apollo-graphql-starter-kit.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/mrdulin/react-apollo-graphql-client/issues"
+    "url": "https://github.com/mrdulin/react-apollo-graphql-starter-kit/issues"
   },
-  "homepage": "https://github.com/mrdulin/react-apollo-graphql-client#readme",
+  "homepage": "https://github.com/mrdulin/react-apollo-graphql-starter-kit#readme",
   "dependencies": {
     "apollo-cache-inmemory": "^1.2.10",
     "apollo-client": "^2.2.8",
