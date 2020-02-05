@@ -1,6 +1,6 @@
-# react-apollo-graphql-fullstack
+# react-apollo-graphql-starter-kit
 
-Learning react-apollo and GraphQL with Full-stack
+Learning react-apollo and GraphQL
 
 ## references
 
