@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders hello correctly 1`] = `
+<DocumentFragment>
+  <div>
+    <ul
+      data-testid="list"
+    >
+      <li>
+        post one
+      </li>
+      <li>
+        post two
+      </li>
+    </ul>
+  </div>
+</DocumentFragment>
+`;
