@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ContactUs/> can render with default props 1`] = `
+<Meta
+  description="description"
+  title="title"
+>
+  <NextSeo
+    description="description"
+    title="title"
+  >
+    <div>
+      title
+       
+      description
+    </div>
+  </NextSeo>
+</Meta>
+`;
