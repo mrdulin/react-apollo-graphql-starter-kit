@@ -15,9 +15,14 @@ describe('61157392', () => {
     jest.resetAllMocks();
   });
   it('should pass', async () => {
-    dynamodb.getItem().promise.mockResolvedValueOnce({ rows: [] });
+    dynamodb.getItem().promise.mockResolvedValueOnce({
+      Item: {
+        id: { S: '1' },
+        name: { S: 'a' },
+      },
+    });
     const actual = await findById('1');
-    expect(actual).toEqual({ rows: [] });
+    expect(actual).toEqual({ id: '1', name: 'a' });
     expect(dynamodb.getItem).toBeCalledWith({
       TableName: 'table-name',
       Key: {
