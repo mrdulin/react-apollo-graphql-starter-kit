@@ -1,0 +1,13 @@
+{
+  "videos": [
+    {
+      "fields": { "sectionUUID": 1 }
+    },
+    {
+      "fields": { "sectionUUID": 2 }
+    },
+    {
+      "fields": { "sectionUUID": 3 }
+    }
+  ]
+}
