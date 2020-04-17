@@ -1,4 +1,4 @@
-const repository = require('.');
+const repository = require('./repository');
 
 const container = {};
 
@@ -13,4 +13,13 @@ describe('Repository', () => {
       disconnect: expect.any(Function),
     });
   });
+
+  it('should generate ticket', () => {
+    let hello = repository(container);
+    const logSpy = jest.spyOn(console, 'log');
+    hello.generateTicket();
+    expect(logSpy).toBeCalledWith('generate ticket function called');
+  });
+
+  // rest test cases same as above
 });
