@@ -1,7 +1,7 @@
 import App from './app';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 
-jest.mock('firebase', () => {
+jest.mock('firebase/app', () => {
   return {
     auth: jest.fn().mockReturnThis(),
     signInWithEmailAndPassword: jest.fn(),
