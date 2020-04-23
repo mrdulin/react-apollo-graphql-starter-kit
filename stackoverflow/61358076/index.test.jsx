@@ -18,6 +18,8 @@ describe('61358076', () => {
     const wrapper = shallow(<MyComponent></MyComponent>);
     await wrapper.instance().saveToFirebase();
     expect(firestoreMock.collection).toBeCalledWith('messages');
+    expect(firestoreMock.doc).toBeCalledWith('fuck@qq.com');
+    expect(firestoreMock.set).toBeCalledWith({ email: 'fuck@qq.com' });
     expect(clearFieldsSpy).toBeCalledWith('Your Message have been submitted successfully.');
   });
 });
