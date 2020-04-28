@@ -15,7 +15,6 @@ describe('61465031', () => {
     const mResponse = { data: ['a', 'b'] };
     const getSpy = jest.spyOn(axios, 'get').mockResolvedValueOnce(mResponse);
     const wrapper = shallow(<ParentComponent></ParentComponent>);
-    await whenStable();
     expect(wrapper.find('ChildComponent').prop('stockData')).toEqual(['a', 'b']);
     getSpy.mockRestore();
   });
