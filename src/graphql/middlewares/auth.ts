@@ -6,8 +6,8 @@ const authLink = new ApolloLink((operation: Operation, forward?: NextLink) => {
   const jwt = auth.getJwt();
   operation.setContext({
     headers: {
-      Authorization: `Bearer ${jwt}`
-    }
+      Authorization: `Bearer ${jwt}`,
+    },
   });
 
   if (forward) {
