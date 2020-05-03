@@ -30,18 +30,18 @@ class Cart extends PureComponent<Props, any> {
           id: PT.string.isRequired,
           title: PT.string.isRequired,
           author: PT.string.isRequired,
-          count: PT.number.isRequired
-        })
-      )
+          count: PT.number.isRequired,
+        }),
+      ),
     }),
     addToCart: PT.func,
     removeFromCart: PT.func,
     removeCountFromCart: PT.func,
-    removeAllFromCart: PT.func
+    removeAllFromCart: PT.func,
   };
 
   public static defaultProps: ICartProps = {
-    cart: { books: [] }
+    cart: { books: [] },
   };
 
   public render(): ReactNode {
@@ -52,7 +52,7 @@ class Cart extends PureComponent<Props, any> {
         {cart.books.length ? (
           <div>
             <ul>
-              {cart.books.map(book => {
+              {cart.books.map((book) => {
                 return (
                   <li key={book.id}>
                     <span>{book.title}</span>
@@ -105,15 +105,15 @@ export default compose(
   graphql(Q.CART, {
     props: (props: any) => {
       const {
-        data: { cart }
+        data: { cart },
       } = props;
       return {
-        cart
+        cart,
       };
-    }
+    },
   }),
   graphql(M.REMOVE_ALL_FROM_COUNT, { name: 'removeAllFromCart' }),
   graphql(M.ADD_TO_CART, { name: 'addToCart' }),
   graphql(M.REMOVE_FROM_CART, { name: 'removeFromCart' }),
-  graphql(M.REMOVE_COUNT_FROM_CART, { name: 'removeCountFromCart' })
+  graphql(M.REMOVE_COUNT_FROM_CART, { name: 'removeCountFromCart' }),
 )(Cart);

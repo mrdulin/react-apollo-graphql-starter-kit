@@ -1,28 +1,42 @@
 import React from 'react';
-import { Query } from 'react-apollo';
+import { Query } from '@apollo/react-components';
 import PT from 'prop-types';
-
 import * as Q from 'gqlMod/queries/topic.gql';
+import { QueryResult } from '@apollo/react-common';
 
-class Topic extends React.Component {
-  static propTypes = {
-    match: PT.object
+interface ITopicProps {
+  match: any;
+}
+
+class Topic extends React.Component<ITopicProps, any> {
+  public static propTypes = {
+    match: PT.object,
   };
-  componentDidCatch() {
+  public componentDidCatch() {
     console.log('Topic component error');
   }
-  render() {
+  public render() {
     const { match } = this.props;
     return (
       <div>
         <Query
           query={Q.getTopicById}
           variables={{
-            id: match.params.id
-          }}>
-          {({ loading, error, data: { topic } }) => {
-            if (loading) return <p>loading...</p>;
-            if (error) return <p>Error</p>;
+            id: match.params.id,
+          }}
+        >
+          {(result: QueryResult) => {
+            const {
+              loading,
+              error,
+              data: { topic },
+            } = result;
+            if (loading) {
+              return <p>loading...</p>;
+            }
+            if (error) {
+              return <p>Error</p>;
+            }
             return (
               <div>
                 <h3>{topic.title}</h3>
@@ -36,7 +50,7 @@ class Topic extends React.Component {
                 <article dangerouslySetInnerHTML={{ __html: topic.content }} />
                 <hr />
                 <section>
-                  {topic.replies.map(reply => {
+                  {topic.replies.map((reply) => {
                     return (
                       <div key={reply.id}>
                         <div dangerouslySetInnerHTML={{ __html: reply.content }} />
