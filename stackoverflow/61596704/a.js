@@ -4,7 +4,7 @@ export default class A {
     this.classB = classB;
   }
 
-  public getName() {
+  getName() {
     return this.classB.getName();
   }
 }
