@@ -8,7 +8,7 @@ const styles = {
   errorBox: 'errorBox',
 };
 
-export default class MyComponent extends Component {
+export default class Synthese extends Component {
   state = {
     data: {},
     currentStatus: 'LOADING',
