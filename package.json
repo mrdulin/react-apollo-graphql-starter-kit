@@ -54,6 +54,7 @@
     "request": "^2.88.2",
     "rxjs": "^6.5.5",
     "subscriptions-transport-ws": "^0.9.8",
+    "typeorm": "^0.2.24",
     "winston": "^3.2.1"
   },
   "devDependencies": {
