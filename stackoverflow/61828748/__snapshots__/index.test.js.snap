@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GET / should get all stuff 1`] = `
+Object {
+  "query": Object {},
+  "url": "/stuff",
+}
+`;
