@@ -5,9 +5,9 @@ import Router from 'next/router';
 
 jest.mock('next/router', () => ({ push: jest.fn() }), { virtual: true });
 
-const mDispatch = jest.fn();
 jest.mock('react-redux', () => {
   const originalReactRedux = jest.requireActual('react-redux');
+  const mDispatch = jest.fn();
   const mUseDispatch = jest.fn(() => mDispatch);
   return {
     ...originalReactRedux,
@@ -26,6 +26,7 @@ describe('61928263', () => {
     const wrapper = mount(<Logout></Logout>);
     expect(wrapper.find('LoadingMessage')).toBeTruthy();
     expect(useDispatch).toBeCalledTimes(1);
+    const mDispatch = useDispatch();
     expect(mDispatch).toBeCalledWith({ type: 'LOGOUT' });
     expect(Router.push).toBeCalledWith('/');
   });
