@@ -1,4 +1,4 @@
-import { OsEnvFetcher } from './';
+import { OsEnvFetcher } from '.';
 import dotenv from 'dotenv';
 
 describe('OsEnvFetcher', () => {
