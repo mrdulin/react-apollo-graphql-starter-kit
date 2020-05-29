@@ -39,6 +39,7 @@
     "aws-sdk": "^2.668.0",
     "axios": "^0.19.2",
     "bluebird": "^3.7.2",
+    "cron": "^1.8.2",
     "firebase": "^7.14.2",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.10.3",
