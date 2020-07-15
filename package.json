@@ -24,6 +24,7 @@
     "@apollo/react-common": "^3.1.4",
     "@apollo/react-components": "^3.1.5",
     "@apollo/react-hoc": "^3.1.5",
+    "@azure/cosmos": "^3.7.4",
     "apollo-cache-inmemory": "^1.6.5",
     "apollo-client": "^2.6.8",
     "apollo-link": "^1.2.14",
