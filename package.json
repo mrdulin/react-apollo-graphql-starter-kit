@@ -41,7 +41,7 @@
     "axios": "^0.21.2",
     "bluebird": "^3.7.2",
     "cron": "^1.8.2",
-    "firebase": "^7.14.2",
+    "firebase": "^7.24.0",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.10.3",
     "joi": "^14.3.1",
